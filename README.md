@@ -8,6 +8,8 @@ The package is named `pg-qbz`; the sidebar and search advertise it as Qobuz.
 Version 0.1.4 is a preview for the upcoming Chilpa 0.1.3 with managed desktop
 companion support. Chilpa 0.1.2 and earlier cannot load this plugin. Download the
 package for your platform from [Releases](https://github.com/vicrodh/chilpa-pg-qbz/releases).
+The published Linux build requires glibc 2.42 or later; the Apple Silicon build
+requires macOS 26 or later. These are the bundled runtime's platform requirements.
 
 Firefox is required and runs in the background while the plugin prepares audio.
 The Qobuz web player handles stream decryption inside Firefox; neither Chilpa nor
