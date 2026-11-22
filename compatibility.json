@@ -890,7 +890,56 @@
     },
     "rpc_smoke": "passed: isolated empty profile, event negotiation and missing-helper guidance",
     "exact_zip_helper": "passed: handshake, Firefox and FFmpeg detection, login state without an account, EOF shutdown and connection cleanup",
-    "live_login_and_playback": "pending owner validation",
-    "host_integration": "pending"
+    "live_login_and_playback": "Sign-in reached ready in an isolated profile on the previous host build (779a1256), followed by disable and connection cleanup. Real playback remains pending owner validation on macOS.",
+    "host_integration": {
+      "passed": true,
+      "exit": 0,
+      "seconds": 14.43,
+      "package_sha256": "f405c11125b1ab14b396ba55e0fdf782ecf7e52806aabdd502a8037d1966205e",
+      "binary_sha256": "3841860dc5c0c37d5073e34195e07b8e7443ee424c4599a01ac826bfc1fa747f",
+      "checks": [
+        "qml: SETUP PASS native wizard detected Firefox and decoder",
+        "qml: SETUP PASS disabled",
+        "qml: SETUP PASS About release codename"
+      ]
+    },
+    "host_source_commit": "ce0a93fb78772f7b1895d9a2ad448929cc042b02",
+    "host_binary_sha256": "3841860dc5c0c37d5073e34195e07b8e7443ee424c4599a01ac826bfc1fa747f",
+    "host_enable_ms": 9941,
+    "helper_startup_deadline_seconds": 30,
+    "cold_helper_handshake_seconds": 9.414,
+    "startup_regression": "Two initial host checks hit the eight-second handshake deadline. A cold exact-ZIP helper took 9.414 seconds; the final host accepts up to 30 seconds on macOS and passed fresh package installation and detection.",
+    "login_host_integration": {
+      "passed": true,
+      "exit": 0,
+      "seconds": 76.98,
+      "package_sha256": "f405c11125b1ab14b396ba55e0fdf782ecf7e52806aabdd502a8037d1966205e",
+      "binary_sha256": "93b9dafc45dc4c5bef9c47873b5a7450cffdecb85d660b30db1b9448c7082d6b",
+      "checks": [
+        "qml: SETUP PASS native wizard login credentials",
+        "qml: SETUP PASS disabled",
+        "qml: SETUP PASS About release codename"
+      ]
+    },
+    "private_profiles": "Removed; no test credentials were copied into delivery packages or user profiles."
+  },
+  "integrated_host_commit": "ce0a93fb78772f7b1895d9a2ad448929cc042b02",
+  "integration_checks": {
+    "qml_form_suites": {
+      "passed": 29,
+      "failed": 0
+    },
+    "qml_about": {
+      "passed": 5,
+      "failed": 0
+    },
+    "linux_release": {
+      "source_commit": "779a1256955f4f8785e83179b4c40e5734b45c66",
+      "binary_sha256": "3bd3e1a7424baca0a5db8384f3f8d3fdaf2451ebc379144cf9b2af094f9191dd",
+      "clean_main_peak_mib": 239.71484375,
+      "budget_mib": 250,
+      "passed": true,
+      "note": "The following host commit changes only the macOS helper startup deadline; the Linux deadline remains eight seconds."
+    }
   }
 }

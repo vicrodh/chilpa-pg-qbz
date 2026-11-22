@@ -116,7 +116,8 @@ fixture coverage; complete live collection rendering has not been revalidated.
 See `compatibility.json` for reviewed SDK/host pins and the validation matrix.
 Linux x86_64 and macOS Apple Silicon have local test packages. The macOS package
 passed the RPC and managed-helper checks, including Firefox and FFmpeg detection
-and shutdown; account sign-in and real playback still need validation there.
+and shutdown. The real macOS host completed sign-in in an isolated profile and
+loaded the exact ZIP; real playback still needs validation there.
 Build the macOS helper with Python 3.14 and the same commands above. Current
 Chilpa process plugins do not run on Windows; a Firefox `.exe` picker does not
 remove that host limitation. These packages have not been published.
