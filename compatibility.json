@@ -1,5 +1,5 @@
 {
-  "status": "local-pre-release",
+  "status": "preview",
   "sdk_commit": "fe89b2f21a636ca6fdf86ff5cd02e0c87fc41fe7",
   "reviewed_host_source_commit": "8f739a82044d1b966b61c8f6ed6fb97445b7b5dd",
   "flatpak_test_commit": "529055cbc93d8e9d88e0b4f5080f256c378e8fc9262dbdaa05c8e1bb2b32df6d",

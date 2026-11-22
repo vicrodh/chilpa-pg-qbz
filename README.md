@@ -1,11 +1,17 @@
-# Qobuz for Chilpa — pg-qbz
+# QBZ (Qobuz client) for Chilpa
 
 `pg-qbz` is a process source plugin with Qobuz search, library, playlists and discovery,
 and a host-managed Firefox companion for sign-in and audio preparation. It has its
 own identity, `io.github.vicrodh.qbz`, and does not replace another Qobuz plugin.
 The package is named `pg-qbz`; the sidebar and search advertise it as Qobuz.
 
-This is a local pre-release. No catalog entry or public release has been made.
+Version 0.1.4 is a preview for the upcoming Chilpa 0.1.3 with managed desktop
+companion support. Chilpa 0.1.2 and earlier cannot load this plugin. Download the
+package for your platform from [Releases](https://github.com/vicrodh/chilpa-pg-qbz/releases).
+
+Firefox is required and runs in the background while the plugin prepares audio.
+The Qobuz web player handles stream decryption inside Firefox; neither Chilpa nor
+this plugin decrypts streams. Audible playback uses Chilpa's audio engine.
 
 Opening Qobuz pages, albums, artists, playlists or search prepares Firefox in the
 background. This moves browser startup ahead of Play without selecting an audio
@@ -19,10 +25,11 @@ within five minutes, and clear when the account is changed. Missing metadata is
 fetched alongside browser media preparation; availability and full-duration checks still run before
 audio is exposed to Chilpa. Complete PCM is also checked against the FLAC checksum.
 
-## Setup on Linux
+## Setup
 
-1. Install `0.1.4-linux-x86_64.zip` in a Chilpa build with the desktop companion
-   contract. Approve the displayed permissions, including the desktop helper.
+1. Install `pg-qbz-0.1.4-linux-x86_64.zip` on Linux or
+   `pg-qbz-0.1.4-macos-aarch64.zip` on Apple Silicon, in a Chilpa build with the
+   desktop companion contract. Approve the displayed permissions, including the desktop helper.
 2. Open Qobuz settings. Chilpa starts the bundled helper and detects Firefox. If
    Firefox is missing, choose its installation using the native file picker.
 3. Press **Sign in with Firefox**. Sign in on Qobuz's own page. When the session is
@@ -114,19 +121,24 @@ global search, then plays from a search result. Library and edit contracts retai
 fixture coverage; complete live collection rendering has not been revalidated.
 
 See `compatibility.json` for reviewed SDK/host pins and the validation matrix.
-Linux x86_64 and macOS Apple Silicon have local test packages. The macOS package
+Linux x86_64 and macOS Apple Silicon have preview packages. The macOS package
 passed the RPC and managed-helper checks, including Firefox and FFmpeg detection
 and shutdown. The real macOS host completed sign-in in an isolated profile and
 loaded the exact ZIP; real playback still needs validation there.
 Build the macOS helper with Python 3.14 and the same commands above. Current
 Chilpa process plugins do not run on Windows; a Firefox `.exe` picker does not
-remove that host limitation. These packages have not been published.
+remove that host limitation.
 
 ## Provenance
 
-The catalog implementation derives from the Chilpa Qobuz source plugin. Firefox
-integration adapts ZBQ v0.1.1's early injection and action bridge, with an independent
-bounded capture and relay. See `NOTICE`, `COPYING`, `LICENSE-INDEX` and
+Thanks to **[Matthew (@matthewprince)](https://github.com/matthewprince)**
+for **[ZBQ](https://github.com/matthewprince/zbq)**, the QBZ fork whose Firefox
+integration made this approach possible. This plugin adapts ZBQ v0.1.1's early
+injection and action bridge, with an independent bounded capture and relay.
+The upstream MIT license and notices are retained in `browser/vendor/LICENSE`.
+
+The catalog implementation derives from the Chilpa Qobuz source plugin.
+See `NOTICE`, `COPYING`, `LICENSE-INDEX` and
 `browser/vendor/LICENSE`. The complete plugin is GPL-3.0-or-later; retained
 components keep their notices.
 
