@@ -1,0 +1,58 @@
+#!/usr/bin/env python3
+"""Check the packaged RPC worker using a disposable profile."""
+import argparse
+import json
+import pathlib
+import selectors
+import subprocess
+import tempfile
+
+parser = argparse.ArgumentParser()
+parser.add_argument('binary', type=pathlib.Path)
+args = parser.parse_args()
+
+def require(condition, message):
+    if not condition:
+        raise RuntimeError(message)
+
+with tempfile.TemporaryDirectory(prefix='plugin-plugin-smoke-') as profile:
+    cache = pathlib.Path(profile) / 'cache'
+    cache.mkdir()
+    directories = {'data_dir':profile, 'cache_dir':str(cache)}
+    process = subprocess.Popen([str(args.binary.resolve())], stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+    selector = selectors.DefaultSelector()
+    selector.register(process.stdout, selectors.EVENT_READ)
+    next_id = 0
+    def call(method, params):
+        global next_id
+        next_id += 1
+        process.stdin.write(json.dumps({'jsonrpc':'2.0','id':next_id,'method':method,'params':params})+'\n')
+        process.stdin.flush()
+        require(bool(selector.select(60)), 'Plugin response timed out')
+        response = json.loads(process.stdout.readline())
+        require(response.get('id') == next_id, 'Plugin response order differs')
+        require('error' not in response, 'Plugin returned an RPC error')
+        return response['result']
+    try:
+        greeting = call('initialize', {**directories, 'locale':'es'})
+        require(greeting['capabilities']['playback_events'] == 1, 'Missing event capability')
+        require(not call('auth.status', {})['signed_in'], 'Unexpected session in empty profile')
+        form = call('settings.open', {})
+        require(form['status']['phase'] != 'ready', 'Missing browser connection must not claim readiness')
+        require(not form['values'], 'Missing browser connection must expose no private endpoint')
+        reporting = call('reporting.status', {})
+        require(reporting['queued'] == 0 and not reporting['host_supports_events'], 'Initialization created a false playback report')
+        call('initialize', {**directories, 'locale':'es', 'playback_events':1})
+        require(call('reporting.status', {})['host_supports_events'], 'Host capability was not negotiated')
+        discarded = call('playback.event', {'kind':'started', 'playback_id':'00000000-0000-4000-8000-000000000001', 'resolution_id':'signed-out-fixture'})
+        require(discarded == {'accepted':False,'discard':True}, 'Signed-out playback must be explicitly discarded')
+        require(call('reporting.status', {})['queued'] == 0, 'Signed-out playback queued a provider report')
+        print('PASS: release RPC, missing-helper guidance, event negotiation, signed-out discard, no false reports')
+    finally:
+        process.stdin.close()
+        try:
+            process.wait(timeout=5)
+        except subprocess.TimeoutExpired:
+            process.kill()
+            process.wait()
+        selector.close()

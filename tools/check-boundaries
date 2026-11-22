@@ -1,0 +1,37 @@
+#!/usr/bin/env python3
+"""Check dependency boundaries, excluded endpoints and module size."""
+from pathlib import Path
+import re
+import tomllib
+import json
+
+root = Path(__file__).resolve().parents[1]
+problems = []
+package = tomllib.loads((root / 'Cargo.toml').read_text())['package']
+manifest = json.loads((root / 'manifest.json').read_text())
+if manifest['version'] != package['version'] :
+    problems.append('package and manifest must use the same version')
+if manifest['id'] != 'io.github.vicrodh.qbz' or manifest['api_version'] != 1 or manifest['runtime'] != 'process':
+    problems.append('stable manifest identity and process contract changed')
+for path in (root / 'crates').rglob('*.rs'):
+    content = path.read_text()
+    forbidden = r'(?i)qconnect|qobuz connect|/qws/|jwt_qws|delegate_auth|extract_bundle|login_with_oauth_code|login_with_token|/user/login'
+    # API models may describe the server's account payload without implementing login.
+    code = '\n'.join(line for line in content.splitlines() if not line.lstrip().startswith('//'))
+    if re.search(forbidden, code):
+        problems.append(f'{path.relative_to(root)}: forbidden login or Connect implementation')
+    if len(content.splitlines()) > 1500:
+        problems.append(f'{path.relative_to(root)}: exceeds 1500 lines')
+for path in (root / 'src').rglob('*.rs'):
+    if len(path.read_text().splitlines()) > 1500:
+        problems.append(f'{path.relative_to(root)}: exceeds 1500 lines')
+for path in [root / 'Cargo.toml', *root.glob('crates/*/Cargo.toml')]:
+    manifest = tomllib.loads(path.read_text())
+    for dependency in manifest.get('dependencies', {}).values():
+        if isinstance(dependency, dict) and 'git' in dependency:
+            problems.append(f'{path.relative_to(root)}: git dependency')
+for problem in problems:
+    print(problem)
+if problems:
+    raise SystemExit(1)
+print('PASS: local API crates, browser-owned sign-in, file limits respected')

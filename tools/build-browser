@@ -1,0 +1,68 @@
+#!/usr/bin/env python3
+"""Package the managed browser runtime without a second GUI or installer."""
+
+import hashlib
+import json
+import platform
+from pathlib import Path
+import subprocess
+import sys
+import shutil
+import tarfile
+
+root = Path(__file__).resolve().parents[1]
+if sys.platform not in ("linux", "darwin"):
+    raise SystemExit("The managed browser package requires Linux or macOS.")
+subprocess.run(
+    [
+        sys.executable,
+        "-m",
+        "PyInstaller",
+        "--noconfirm",
+        "--clean",
+        "--onedir",
+        "--name",
+        "qbz-browser",
+        "--distpath",
+        str(root / "dist/browser"),
+        "--workpath",
+        str(root / "build/browser"),
+        "--specpath",
+        str(root / "build"),
+        "--paths",
+        str(root / "browser"),
+        "--add-data",
+        str(root / "browser/vendor") + ":vendor",
+        "--add-data",
+        str(root / "browser/capture.js") + ":.",
+        "--add-data",
+        str(root / "browser/icon.png") + ":.",
+        "--exclude-module",
+        "PySide6",
+        "--exclude-module",
+        "wizard",
+        "--exclude-module",
+        "PySide6.QtQml",
+        "--exclude-module",
+        "numpy",
+        "--exclude-module",
+        "matplotlib",
+        str(root / "browser/companion.py"),
+    ],
+    check=True,
+)
+folder = root / "dist/browser/qbz-browser"
+shutil.copytree(root / "browser/licenses", folder / "licenses", dirs_exist_ok=True)
+for name in ("COPYING", "NOTICE", "LICENSE-INDEX"):
+    shutil.copy2(root / name, folder / name)
+shutil.copy2(root / "browser/vendor/LICENSE", folder / "LICENSE-ZBQ")
+
+shutil.copy2(root / "browser/icon.png", folder / "icon.png")
+version = json.loads((root / "manifest.json").read_text())["version"]
+system = "macos" if sys.platform == "darwin" else "linux"
+architecture = {"arm64": "aarch64", "AMD64": "x86_64"}.get(platform.machine(), platform.machine())
+archive = root / f"dist/qbz-browser-{version}-{system}-{architecture}.tar.gz"
+with tarfile.open(archive, "w:gz") as tar:
+    tar.add(folder, arcname="qbz-browser")
+print(archive)
+print("SHA256 " + hashlib.sha256(archive.read_bytes()).hexdigest())

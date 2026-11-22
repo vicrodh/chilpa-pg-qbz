@@ -1,0 +1,70 @@
+#!/usr/bin/env python3
+"""Exercise the exact package and native settings controls in an isolated host."""
+import argparse
+import hashlib
+import json
+import os
+from pathlib import Path
+import subprocess
+import time
+
+root = Path(__file__).resolve().parents[1]
+parser = argparse.ArgumentParser(description=__doc__)
+parser.add_argument("--binary", type=Path, required=True)
+parser.add_argument("--output", type=Path, required=True)
+parser.add_argument("--profile", type=Path)
+parser.add_argument("--backend", choices=["native", "flatpak"], default="native")
+parser.add_argument("--denied", action="store_true")
+parser.add_argument("--firefox-flatpak", action="store_true")
+args = parser.parse_args()
+out = args.output.resolve()
+out.mkdir(mode=0o700, parents=True, exist_ok=False)
+for name in ["config", "data", "cache", "runtime"]:
+    (out / name).mkdir(mode=0o700)
+(out / "config/chilpa").mkdir()
+(out / "config/chilpa/settings.conf").write_text("language = es\n")
+private = out / "data/chilpa/plugin-desktop/io.github.vicrodh.qbz"
+private.mkdir(mode=0o700, parents=True)
+if args.profile:
+    (private / "firefox").symlink_to(args.profile.resolve(), target_is_directory=True)
+if args.firefox_flatpak:
+    (private / "launcher.json").write_text(json.dumps({"mode":"flatpak","path":""}))
+package = out / "package.zip"
+package.write_bytes((root / ("dist/" + json.loads((root / "manifest.json").read_text())["version"] + "-linux-x86_64.zip")).read_bytes())
+fixture = out / "setup.qml"
+fixture.write_text((root / "tests/setup.qml").read_text().replace("PACKAGE", json.dumps(package.as_uri()))
+    .replace("SCREENSHOT", json.dumps(str(out / "wizard.png"))).replace("DENIED", "true" if args.denied else "false"))
+env = {k:v for k,v in os.environ.items() if not k.startswith(("CHILPA_", "QT_", "QSG_"))}
+overrides = dict(XDG_CONFIG_HOME=str(out / "config"), XDG_DATA_HOME=str(out / "data"), XDG_CACHE_HOME=str(out / "cache"),
+    CHILPA_SECOND_INSTANCE="1", CHILPA_DEV="1", CHILPA_QML_SMOKE=str(fixture), QT_QPA_PLATFORM="offscreen", QT_QUICK_BACKEND="software")
+if args.backend == "flatpak":
+    command = ["flatpak", "run", "--filesystem="+str(out), "--filesystem="+str(args.binary.parent)+":ro",
+        "--no-talk-name=org.freedesktop.Flatpak" if args.denied else "--talk-name=org.freedesktop.Flatpak"]
+    command += ["--command=env", "app.chilpa.Chilpa"]
+    command += [k+"="+v for k,v in overrides.items()]
+    command += [str(args.binary)]
+else:
+    command = ["dbus-run-session", "--", str(args.binary)]
+    env.update(overrides)
+started = time.monotonic()
+with open(out / "host.log", "w") as log:
+    process = subprocess.Popen(command, env=env, stdout=log, stderr=log)
+    try:
+        result = process.wait(timeout=115)
+    except subprocess.TimeoutExpired:
+        process.terminate()
+        process.wait(timeout=15)
+        raise
+connection = out / "data/chilpa/plugin-desktop/io.github.vicrodh.qbz/connection.json"
+deadline = time.monotonic() + 15
+while connection.exists() and time.monotonic() < deadline:
+    time.sleep(0.1)
+if connection.exists():
+    raise RuntimeError("The disabled plugin left its companion running")
+text = (out / "host.log").read_text()
+passed = result == 0 and "SETUP PASS disabled" in text and "SETUP FAIL" not in text
+report = {"passed":passed,"backend":args.backend,"denied":args.denied,"exit":result,"seconds":round(time.monotonic()-started,2),
+    "package_sha256":hashlib.sha256(package.read_bytes()).hexdigest(),"binary_sha256":hashlib.sha256(args.binary.read_bytes()).hexdigest()}
+(out / "report.json").write_text(json.dumps(report,indent=2)+"\n")
+print(json.dumps(report))
+raise SystemExit(0 if passed else 1)

@@ -1,0 +1,3369 @@
+[
+  {
+    "case": "album-0",
+    "expected": {
+      "kind": "album"
+    },
+    "input": {},
+    "kind": "album",
+    "parent": null
+  },
+  {
+    "case": "track-0",
+    "expected": {
+      "album": "Fixture album",
+      "album_ref": "album:fixture-album",
+      "artist": "Performer",
+      "artist_ref": "artist:8",
+      "genre": "Jazz",
+      "genres": [
+        "Jazz"
+      ],
+      "image": "https://fixture.test/cover.jpg",
+      "kind": "track",
+      "label": "Label",
+      "label_ref": "label:9",
+      "release_date": "2024-02-03",
+      "release_type": "album",
+      "year": 2024
+    },
+    "input": {},
+    "kind": "track",
+    "parent": {
+      "artist": {
+        "id": 8,
+        "name": "Performer"
+      },
+      "copyright": "Fixture rights",
+      "description": "Fixture description",
+      "duration": 180,
+      "favorited_at": 1700000000,
+      "genre": {
+        "id": 3,
+        "name": "Jazz"
+      },
+      "id": "fixture-album",
+      "image": {
+        "large": "https://fixture.test/cover.jpg"
+      },
+      "label": {
+        "id": 9,
+        "name": "Label"
+      },
+      "maximum_bit_depth": 24,
+      "maximum_sampling_rate": 96,
+      "release_date_original": "2024-02-03",
+      "release_type": "album",
+      "streamable": true,
+      "title": "Fixture album",
+      "tracks": {
+        "items": [
+          {
+            "album": {
+              "artist": {
+                "id": 8,
+                "name": "Performer"
+              },
+              "id": "fixture-album",
+              "image": {
+                "large": "https://fixture.test/cover.jpg"
+              },
+              "release_date_original": "2024-02-03",
+              "title": "Fixture album"
+            },
+            "audio_info": {
+              "replaygain_track_gain": -3.5,
+              "replaygain_track_peak": 0.75
+            },
+            "composer": {
+              "id": 8,
+              "name": "Composer"
+            },
+            "duration": 90,
+            "id": 42,
+            "isrc": "FIXTURE42",
+            "maximum_bit_depth": 24,
+            "maximum_sampling_rate": 96,
+            "media_number": 1,
+            "performer": {
+              "id": 8,
+              "name": "Performer"
+            },
+            "performers": "Performer, MainArtist",
+            "streamable": true,
+            "title": "Fixture song",
+            "track_number": 1,
+            "work": "Work"
+          },
+          {
+            "album": {
+              "artist": {
+                "id": 8,
+                "name": "Performer"
+              },
+              "id": "fixture-album",
+              "image": {
+                "large": "https://fixture.test/cover.jpg"
+              },
+              "release_date_original": "2024-02-03",
+              "title": "Fixture album"
+            },
+            "audio_info": {
+              "replaygain_track_gain": -3.5,
+              "replaygain_track_peak": 0.75
+            },
+            "composer": {
+              "id": 8,
+              "name": "Composer"
+            },
+            "duration": 90,
+            "id": 42,
+            "isrc": "FIXTURE42",
+            "maximum_bit_depth": 24,
+            "maximum_sampling_rate": 96,
+            "media_number": 1,
+            "performer": {
+              "id": 8,
+              "name": "Performer"
+            },
+            "performers": "Performer, MainArtist",
+            "streamable": true,
+            "title": "Fixture song",
+            "track_number": 1,
+            "work": "Work"
+          }
+        ],
+        "total": 2
+      },
+      "tracks_count": 2,
+      "upc": "123"
+    }
+  },
+  {
+    "case": "artist-0",
+    "expected": {
+      "image_fallback": "user-star",
+      "kind": "artist"
+    },
+    "input": {},
+    "kind": "artist",
+    "parent": null
+  },
+  {
+    "case": "label-0",
+    "expected": {
+      "art_fit": "contain",
+      "image_fallback": "disc",
+      "kind": "label"
+    },
+    "input": {},
+    "kind": "label",
+    "parent": null
+  },
+  {
+    "case": "playlist-0",
+    "expected": {
+      "kind": "playlist"
+    },
+    "input": {},
+    "kind": "playlist",
+    "parent": null
+  },
+  {
+    "case": "album-1",
+    "expected": {
+      "kind": "album"
+    },
+    "input": null,
+    "kind": "album",
+    "parent": null
+  },
+  {
+    "case": "track-1",
+    "expected": {
+      "album": "Fixture album",
+      "album_ref": "album:fixture-album",
+      "artist": "Performer",
+      "artist_ref": "artist:8",
+      "genre": "Jazz",
+      "genres": [
+        "Jazz"
+      ],
+      "image": "https://fixture.test/cover.jpg",
+      "kind": "track",
+      "label": "Label",
+      "label_ref": "label:9",
+      "release_date": "2024-02-03",
+      "release_type": "album",
+      "year": 2024
+    },
+    "input": null,
+    "kind": "track",
+    "parent": {
+      "artist": {
+        "id": 8,
+        "name": "Performer"
+      },
+      "copyright": "Fixture rights",
+      "description": "Fixture description",
+      "duration": 180,
+      "favorited_at": 1700000000,
+      "genre": {
+        "id": 3,
+        "name": "Jazz"
+      },
+      "id": "fixture-album",
+      "image": {
+        "large": "https://fixture.test/cover.jpg"
+      },
+      "label": {
+        "id": 9,
+        "name": "Label"
+      },
+      "maximum_bit_depth": 24,
+      "maximum_sampling_rate": 96,
+      "release_date_original": "2024-02-03",
+      "release_type": "album",
+      "streamable": true,
+      "title": "Fixture album",
+      "tracks": {
+        "items": [
+          {
+            "album": {
+              "artist": {
+                "id": 8,
+                "name": "Performer"
+              },
+              "id": "fixture-album",
+              "image": {
+                "large": "https://fixture.test/cover.jpg"
+              },
+              "release_date_original": "2024-02-03",
+              "title": "Fixture album"
+            },
+            "audio_info": {
+              "replaygain_track_gain": -3.5,
+              "replaygain_track_peak": 0.75
+            },
+            "composer": {
+              "id": 8,
+              "name": "Composer"
+            },
+            "duration": 90,
+            "id": 42,
+            "isrc": "FIXTURE42",
+            "maximum_bit_depth": 24,
+            "maximum_sampling_rate": 96,
+            "media_number": 1,
+            "performer": {
+              "id": 8,
+              "name": "Performer"
+            },
+            "performers": "Performer, MainArtist",
+            "streamable": true,
+            "title": "Fixture song",
+            "track_number": 1,
+            "work": "Work"
+          },
+          {
+            "album": {
+              "artist": {
+                "id": 8,
+                "name": "Performer"
+              },
+              "id": "fixture-album",
+              "image": {
+                "large": "https://fixture.test/cover.jpg"
+              },
+              "release_date_original": "2024-02-03",
+              "title": "Fixture album"
+            },
+            "audio_info": {
+              "replaygain_track_gain": -3.5,
+              "replaygain_track_peak": 0.75
+            },
+            "composer": {
+              "id": 8,
+              "name": "Composer"
+            },
+            "duration": 90,
+            "id": 42,
+            "isrc": "FIXTURE42",
+            "maximum_bit_depth": 24,
+            "maximum_sampling_rate": 96,
+            "media_number": 1,
+            "performer": {
+              "id": 8,
+              "name": "Performer"
+            },
+            "performers": "Performer, MainArtist",
+            "streamable": true,
+            "title": "Fixture song",
+            "track_number": 1,
+            "work": "Work"
+          }
+        ],
+        "total": 2
+      },
+      "tracks_count": 2,
+      "upc": "123"
+    }
+  },
+  {
+    "case": "artist-1",
+    "expected": {
+      "image_fallback": "user-star",
+      "kind": "artist"
+    },
+    "input": null,
+    "kind": "artist",
+    "parent": null
+  },
+  {
+    "case": "label-1",
+    "expected": {
+      "art_fit": "contain",
+      "image_fallback": "disc",
+      "kind": "label"
+    },
+    "input": null,
+    "kind": "label",
+    "parent": null
+  },
+  {
+    "case": "playlist-1",
+    "expected": {
+      "kind": "playlist"
+    },
+    "input": null,
+    "kind": "playlist",
+    "parent": null
+  },
+  {
+    "case": "album-2",
+    "expected": {
+      "added_at": 1700000000,
+      "artist": "Performer",
+      "artist_ref": "artist:8",
+      "available": true,
+      "copyright": "Fixture rights",
+      "description": "Fixture description",
+      "duration_ms": 180000,
+      "genre": "Jazz",
+      "genres": [
+        "Jazz"
+      ],
+      "image": "https://fixture.test/cover.jpg",
+      "kind": "album",
+      "label": "Label",
+      "label_ref": "label:9",
+      "quality": {
+        "bits": 24,
+        "codec": "flac",
+        "rate": 96000
+      },
+      "ref": "album:fixture-album",
+      "release_date": "2024-02-03",
+      "release_type": "album",
+      "title": "Fixture album",
+      "tracks": 2,
+      "upc": "123",
+      "year": 2024
+    },
+    "input": {
+      "artist": {
+        "id": 8,
+        "name": "Performer"
+      },
+      "copyright": "Fixture rights",
+      "description": "Fixture description",
+      "duration": 180,
+      "favorited_at": 1700000000,
+      "genre": {
+        "id": 3,
+        "name": "Jazz"
+      },
+      "id": "fixture-album",
+      "image": {
+        "large": "https://fixture.test/cover.jpg"
+      },
+      "label": {
+        "id": 9,
+        "name": "Label"
+      },
+      "maximum_bit_depth": 24,
+      "maximum_sampling_rate": 96,
+      "release_date_original": "2024-02-03",
+      "release_type": "album",
+      "streamable": true,
+      "title": "Fixture album",
+      "tracks": {
+        "items": [
+          {
+            "album": {
+              "artist": {
+                "id": 8,
+                "name": "Performer"
+              },
+              "id": "fixture-album",
+              "image": {
+                "large": "https://fixture.test/cover.jpg"
+              },
+              "release_date_original": "2024-02-03",
+              "title": "Fixture album"
+            },
+            "audio_info": {
+              "replaygain_track_gain": -3.5,
+              "replaygain_track_peak": 0.75
+            },
+            "composer": {
+              "id": 8,
+              "name": "Composer"
+            },
+            "duration": 90,
+            "id": 42,
+            "isrc": "FIXTURE42",
+            "maximum_bit_depth": 24,
+            "maximum_sampling_rate": 96,
+            "media_number": 1,
+            "performer": {
+              "id": 8,
+              "name": "Performer"
+            },
+            "performers": "Performer, MainArtist",
+            "streamable": true,
+            "title": "Fixture song",
+            "track_number": 1,
+            "work": "Work"
+          },
+          {
+            "album": {
+              "artist": {
+                "id": 8,
+                "name": "Performer"
+              },
+              "id": "fixture-album",
+              "image": {
+                "large": "https://fixture.test/cover.jpg"
+              },
+              "release_date_original": "2024-02-03",
+              "title": "Fixture album"
+            },
+            "audio_info": {
+              "replaygain_track_gain": -3.5,
+              "replaygain_track_peak": 0.75
+            },
+            "composer": {
+              "id": 8,
+              "name": "Composer"
+            },
+            "duration": 90,
+            "id": 42,
+            "isrc": "FIXTURE42",
+            "maximum_bit_depth": 24,
+            "maximum_sampling_rate": 96,
+            "media_number": 1,
+            "performer": {
+              "id": 8,
+              "name": "Performer"
+            },
+            "performers": "Performer, MainArtist",
+            "streamable": true,
+            "title": "Fixture song",
+            "track_number": 1,
+            "work": "Work"
+          }
+        ],
+        "total": 2
+      },
+      "tracks_count": 2,
+      "upc": "123"
+    },
+    "kind": "album",
+    "parent": null
+  },
+  {
+    "case": "track-2",
+    "expected": {
+      "added_at": 1700000000,
+      "album": "Fixture album",
+      "album_ref": "album:fixture-album",
+      "artist": "Performer",
+      "artist_ref": "artist:8",
+      "available": true,
+      "copyright": "Fixture rights",
+      "duration_ms": 180000,
+      "genre": "Jazz",
+      "genres": [
+        "Jazz"
+      ],
+      "image": "https://fixture.test/cover.jpg",
+      "kind": "track",
+      "label": "Label",
+      "label_ref": "label:9",
+      "quality": {
+        "bits": 24,
+        "codec": "flac",
+        "rate": 96000
+      },
+      "ref": "track:fixture-album",
+      "release_date": "2024-02-03",
+      "release_type": "album",
+      "title": "Fixture album",
+      "year": 2024
+    },
+    "input": {
+      "artist": {
+        "id": 8,
+        "name": "Performer"
+      },
+      "copyright": "Fixture rights",
+      "description": "Fixture description",
+      "duration": 180,
+      "favorited_at": 1700000000,
+      "genre": {
+        "id": 3,
+        "name": "Jazz"
+      },
+      "id": "fixture-album",
+      "image": {
+        "large": "https://fixture.test/cover.jpg"
+      },
+      "label": {
+        "id": 9,
+        "name": "Label"
+      },
+      "maximum_bit_depth": 24,
+      "maximum_sampling_rate": 96,
+      "release_date_original": "2024-02-03",
+      "release_type": "album",
+      "streamable": true,
+      "title": "Fixture album",
+      "tracks": {
+        "items": [
+          {
+            "album": {
+              "artist": {
+                "id": 8,
+                "name": "Performer"
+              },
+              "id": "fixture-album",
+              "image": {
+                "large": "https://fixture.test/cover.jpg"
+              },
+              "release_date_original": "2024-02-03",
+              "title": "Fixture album"
+            },
+            "audio_info": {
+              "replaygain_track_gain": -3.5,
+              "replaygain_track_peak": 0.75
+            },
+            "composer": {
+              "id": 8,
+              "name": "Composer"
+            },
+            "duration": 90,
+            "id": 42,
+            "isrc": "FIXTURE42",
+            "maximum_bit_depth": 24,
+            "maximum_sampling_rate": 96,
+            "media_number": 1,
+            "performer": {
+              "id": 8,
+              "name": "Performer"
+            },
+            "performers": "Performer, MainArtist",
+            "streamable": true,
+            "title": "Fixture song",
+            "track_number": 1,
+            "work": "Work"
+          },
+          {
+            "album": {
+              "artist": {
+                "id": 8,
+                "name": "Performer"
+              },
+              "id": "fixture-album",
+              "image": {
+                "large": "https://fixture.test/cover.jpg"
+              },
+              "release_date_original": "2024-02-03",
+              "title": "Fixture album"
+            },
+            "audio_info": {
+              "replaygain_track_gain": -3.5,
+              "replaygain_track_peak": 0.75
+            },
+            "composer": {
+              "id": 8,
+              "name": "Composer"
+            },
+            "duration": 90,
+            "id": 42,
+            "isrc": "FIXTURE42",
+            "maximum_bit_depth": 24,
+            "maximum_sampling_rate": 96,
+            "media_number": 1,
+            "performer": {
+              "id": 8,
+              "name": "Performer"
+            },
+            "performers": "Performer, MainArtist",
+            "streamable": true,
+            "title": "Fixture song",
+            "track_number": 1,
+            "work": "Work"
+          }
+        ],
+        "total": 2
+      },
+      "tracks_count": 2,
+      "upc": "123"
+    },
+    "kind": "track",
+    "parent": {
+      "artist": {
+        "id": 8,
+        "name": "Performer"
+      },
+      "copyright": "Fixture rights",
+      "description": "Fixture description",
+      "duration": 180,
+      "favorited_at": 1700000000,
+      "genre": {
+        "id": 3,
+        "name": "Jazz"
+      },
+      "id": "fixture-album",
+      "image": {
+        "large": "https://fixture.test/cover.jpg"
+      },
+      "label": {
+        "id": 9,
+        "name": "Label"
+      },
+      "maximum_bit_depth": 24,
+      "maximum_sampling_rate": 96,
+      "release_date_original": "2024-02-03",
+      "release_type": "album",
+      "streamable": true,
+      "title": "Fixture album",
+      "tracks": {
+        "items": [
+          {
+            "album": {
+              "artist": {
+                "id": 8,
+                "name": "Performer"
+              },
+              "id": "fixture-album",
+              "image": {
+                "large": "https://fixture.test/cover.jpg"
+              },
+              "release_date_original": "2024-02-03",
+              "title": "Fixture album"
+            },
+            "audio_info": {
+              "replaygain_track_gain": -3.5,
+              "replaygain_track_peak": 0.75
+            },
+            "composer": {
+              "id": 8,
+              "name": "Composer"
+            },
+            "duration": 90,
+            "id": 42,
+            "isrc": "FIXTURE42",
+            "maximum_bit_depth": 24,
+            "maximum_sampling_rate": 96,
+            "media_number": 1,
+            "performer": {
+              "id": 8,
+              "name": "Performer"
+            },
+            "performers": "Performer, MainArtist",
+            "streamable": true,
+            "title": "Fixture song",
+            "track_number": 1,
+            "work": "Work"
+          },
+          {
+            "album": {
+              "artist": {
+                "id": 8,
+                "name": "Performer"
+              },
+              "id": "fixture-album",
+              "image": {
+                "large": "https://fixture.test/cover.jpg"
+              },
+              "release_date_original": "2024-02-03",
+              "title": "Fixture album"
+            },
+            "audio_info": {
+              "replaygain_track_gain": -3.5,
+              "replaygain_track_peak": 0.75
+            },
+            "composer": {
+              "id": 8,
+              "name": "Composer"
+            },
+            "duration": 90,
+            "id": 42,
+            "isrc": "FIXTURE42",
+            "maximum_bit_depth": 24,
+            "maximum_sampling_rate": 96,
+            "media_number": 1,
+            "performer": {
+              "id": 8,
+              "name": "Performer"
+            },
+            "performers": "Performer, MainArtist",
+            "streamable": true,
+            "title": "Fixture song",
+            "track_number": 1,
+            "work": "Work"
+          }
+        ],
+        "total": 2
+      },
+      "tracks_count": 2,
+      "upc": "123"
+    }
+  },
+  {
+    "case": "artist-2",
+    "expected": {
+      "added_at": 1700000000,
+      "image": "https://fixture.test/cover.jpg",
+      "image_fallback": "user-star",
+      "kind": "artist",
+      "ref": "artist:fixture-album",
+      "release_date": "2024-02-03"
+    },
+    "input": {
+      "artist": {
+        "id": 8,
+        "name": "Performer"
+      },
+      "copyright": "Fixture rights",
+      "description": "Fixture description",
+      "duration": 180,
+      "favorited_at": 1700000000,
+      "genre": {
+        "id": 3,
+        "name": "Jazz"
+      },
+      "id": "fixture-album",
+      "image": {
+        "large": "https://fixture.test/cover.jpg"
+      },
+      "label": {
+        "id": 9,
+        "name": "Label"
+      },
+      "maximum_bit_depth": 24,
+      "maximum_sampling_rate": 96,
+      "release_date_original": "2024-02-03",
+      "release_type": "album",
+      "streamable": true,
+      "title": "Fixture album",
+      "tracks": {
+        "items": [
+          {
+            "album": {
+              "artist": {
+                "id": 8,
+                "name": "Performer"
+              },
+              "id": "fixture-album",
+              "image": {
+                "large": "https://fixture.test/cover.jpg"
+              },
+              "release_date_original": "2024-02-03",
+              "title": "Fixture album"
+            },
+            "audio_info": {
+              "replaygain_track_gain": -3.5,
+              "replaygain_track_peak": 0.75
+            },
+            "composer": {
+              "id": 8,
+              "name": "Composer"
+            },
+            "duration": 90,
+            "id": 42,
+            "isrc": "FIXTURE42",
+            "maximum_bit_depth": 24,
+            "maximum_sampling_rate": 96,
+            "media_number": 1,
+            "performer": {
+              "id": 8,
+              "name": "Performer"
+            },
+            "performers": "Performer, MainArtist",
+            "streamable": true,
+            "title": "Fixture song",
+            "track_number": 1,
+            "work": "Work"
+          },
+          {
+            "album": {
+              "artist": {
+                "id": 8,
+                "name": "Performer"
+              },
+              "id": "fixture-album",
+              "image": {
+                "large": "https://fixture.test/cover.jpg"
+              },
+              "release_date_original": "2024-02-03",
+              "title": "Fixture album"
+            },
+            "audio_info": {
+              "replaygain_track_gain": -3.5,
+              "replaygain_track_peak": 0.75
+            },
+            "composer": {
+              "id": 8,
+              "name": "Composer"
+            },
+            "duration": 90,
+            "id": 42,
+            "isrc": "FIXTURE42",
+            "maximum_bit_depth": 24,
+            "maximum_sampling_rate": 96,
+            "media_number": 1,
+            "performer": {
+              "id": 8,
+              "name": "Performer"
+            },
+            "performers": "Performer, MainArtist",
+            "streamable": true,
+            "title": "Fixture song",
+            "track_number": 1,
+            "work": "Work"
+          }
+        ],
+        "total": 2
+      },
+      "tracks_count": 2,
+      "upc": "123"
+    },
+    "kind": "artist",
+    "parent": null
+  },
+  {
+    "case": "label-2",
+    "expected": {
+      "art_fit": "contain",
+      "description": "Fixture description",
+      "image": "https://fixture.test/cover.jpg",
+      "image_fallback": "disc",
+      "kind": "label"
+    },
+    "input": {
+      "artist": {
+        "id": 8,
+        "name": "Performer"
+      },
+      "copyright": "Fixture rights",
+      "description": "Fixture description",
+      "duration": 180,
+      "favorited_at": 1700000000,
+      "genre": {
+        "id": 3,
+        "name": "Jazz"
+      },
+      "id": "fixture-album",
+      "image": {
+        "large": "https://fixture.test/cover.jpg"
+      },
+      "label": {
+        "id": 9,
+        "name": "Label"
+      },
+      "maximum_bit_depth": 24,
+      "maximum_sampling_rate": 96,
+      "release_date_original": "2024-02-03",
+      "release_type": "album",
+      "streamable": true,
+      "title": "Fixture album",
+      "tracks": {
+        "items": [
+          {
+            "album": {
+              "artist": {
+                "id": 8,
+                "name": "Performer"
+              },
+              "id": "fixture-album",
+              "image": {
+                "large": "https://fixture.test/cover.jpg"
+              },
+              "release_date_original": "2024-02-03",
+              "title": "Fixture album"
+            },
+            "audio_info": {
+              "replaygain_track_gain": -3.5,
+              "replaygain_track_peak": 0.75
+            },
+            "composer": {
+              "id": 8,
+              "name": "Composer"
+            },
+            "duration": 90,
+            "id": 42,
+            "isrc": "FIXTURE42",
+            "maximum_bit_depth": 24,
+            "maximum_sampling_rate": 96,
+            "media_number": 1,
+            "performer": {
+              "id": 8,
+              "name": "Performer"
+            },
+            "performers": "Performer, MainArtist",
+            "streamable": true,
+            "title": "Fixture song",
+            "track_number": 1,
+            "work": "Work"
+          },
+          {
+            "album": {
+              "artist": {
+                "id": 8,
+                "name": "Performer"
+              },
+              "id": "fixture-album",
+              "image": {
+                "large": "https://fixture.test/cover.jpg"
+              },
+              "release_date_original": "2024-02-03",
+              "title": "Fixture album"
+            },
+            "audio_info": {
+              "replaygain_track_gain": -3.5,
+              "replaygain_track_peak": 0.75
+            },
+            "composer": {
+              "id": 8,
+              "name": "Composer"
+            },
+            "duration": 90,
+            "id": 42,
+            "isrc": "FIXTURE42",
+            "maximum_bit_depth": 24,
+            "maximum_sampling_rate": 96,
+            "media_number": 1,
+            "performer": {
+              "id": 8,
+              "name": "Performer"
+            },
+            "performers": "Performer, MainArtist",
+            "streamable": true,
+            "title": "Fixture song",
+            "track_number": 1,
+            "work": "Work"
+          }
+        ],
+        "total": 2
+      },
+      "tracks_count": 2,
+      "upc": "123"
+    },
+    "kind": "label",
+    "parent": null
+  },
+  {
+    "case": "playlist-2",
+    "expected": {
+      "added_at": 1700000000,
+      "art_fit": "contain",
+      "description": "Fixture description",
+      "duration_ms": 180000,
+      "image": "https://fixture.test/cover.jpg",
+      "kind": "playlist",
+      "ref": "playlist:fixture-album",
+      "release_date": "2024-02-03",
+      "title": "Fixture album",
+      "tracks": 2
+    },
+    "input": {
+      "artist": {
+        "id": 8,
+        "name": "Performer"
+      },
+      "copyright": "Fixture rights",
+      "description": "Fixture description",
+      "duration": 180,
+      "favorited_at": 1700000000,
+      "genre": {
+        "id": 3,
+        "name": "Jazz"
+      },
+      "id": "fixture-album",
+      "image": {
+        "large": "https://fixture.test/cover.jpg"
+      },
+      "label": {
+        "id": 9,
+        "name": "Label"
+      },
+      "maximum_bit_depth": 24,
+      "maximum_sampling_rate": 96,
+      "release_date_original": "2024-02-03",
+      "release_type": "album",
+      "streamable": true,
+      "title": "Fixture album",
+      "tracks": {
+        "items": [
+          {
+            "album": {
+              "artist": {
+                "id": 8,
+                "name": "Performer"
+              },
+              "id": "fixture-album",
+              "image": {
+                "large": "https://fixture.test/cover.jpg"
+              },
+              "release_date_original": "2024-02-03",
+              "title": "Fixture album"
+            },
+            "audio_info": {
+              "replaygain_track_gain": -3.5,
+              "replaygain_track_peak": 0.75
+            },
+            "composer": {
+              "id": 8,
+              "name": "Composer"
+            },
+            "duration": 90,
+            "id": 42,
+            "isrc": "FIXTURE42",
+            "maximum_bit_depth": 24,
+            "maximum_sampling_rate": 96,
+            "media_number": 1,
+            "performer": {
+              "id": 8,
+              "name": "Performer"
+            },
+            "performers": "Performer, MainArtist",
+            "streamable": true,
+            "title": "Fixture song",
+            "track_number": 1,
+            "work": "Work"
+          },
+          {
+            "album": {
+              "artist": {
+                "id": 8,
+                "name": "Performer"
+              },
+              "id": "fixture-album",
+              "image": {
+                "large": "https://fixture.test/cover.jpg"
+              },
+              "release_date_original": "2024-02-03",
+              "title": "Fixture album"
+            },
+            "audio_info": {
+              "replaygain_track_gain": -3.5,
+              "replaygain_track_peak": 0.75
+            },
+            "composer": {
+              "id": 8,
+              "name": "Composer"
+            },
+            "duration": 90,
+            "id": 42,
+            "isrc": "FIXTURE42",
+            "maximum_bit_depth": 24,
+            "maximum_sampling_rate": 96,
+            "media_number": 1,
+            "performer": {
+              "id": 8,
+              "name": "Performer"
+            },
+            "performers": "Performer, MainArtist",
+            "streamable": true,
+            "title": "Fixture song",
+            "track_number": 1,
+            "work": "Work"
+          }
+        ],
+        "total": 2
+      },
+      "tracks_count": 2,
+      "upc": "123"
+    },
+    "kind": "playlist",
+    "parent": null
+  },
+  {
+    "case": "album-3",
+    "expected": {
+      "available": true,
+      "composers": [
+        "Composer"
+      ],
+      "duration_ms": 90000,
+      "kind": "album",
+      "quality": {
+        "bits": 24,
+        "codec": "flac",
+        "rate": 96000
+      },
+      "ref": "album:42",
+      "title": "Fixture song"
+    },
+    "input": {
+      "album": {
+        "artist": {
+          "id": 8,
+          "name": "Performer"
+        },
+        "id": "fixture-album",
+        "image": {
+          "large": "https://fixture.test/cover.jpg"
+        },
+        "release_date_original": "2024-02-03",
+        "title": "Fixture album"
+      },
+      "audio_info": {
+        "replaygain_track_gain": -3.5,
+        "replaygain_track_peak": 0.75
+      },
+      "composer": {
+        "id": 8,
+        "name": "Composer"
+      },
+      "duration": 90,
+      "id": 42,
+      "isrc": "FIXTURE42",
+      "maximum_bit_depth": 24,
+      "maximum_sampling_rate": 96,
+      "media_number": 1,
+      "performer": {
+        "id": 8,
+        "name": "Performer"
+      },
+      "performers": "Performer, MainArtist",
+      "streamable": true,
+      "title": "Fixture song",
+      "track_number": 1,
+      "work": "Work"
+    },
+    "kind": "album",
+    "parent": null
+  },
+  {
+    "case": "track-3",
+    "expected": {
+      "album": "Fixture album",
+      "album_ref": "album:fixture-album",
+      "artist": "Performer",
+      "artist_ref": "artist:8",
+      "available": true,
+      "composer": "Composer",
+      "composer_ref": "artist:8",
+      "composers": [
+        "Composer"
+      ],
+      "disc_number": 1,
+      "duration_ms": 90000,
+      "image": "https://fixture.test/cover.jpg",
+      "isrc": "FIXTURE42",
+      "kind": "track",
+      "normalization": {
+        "gain_db": -3.5,
+        "peak": 0.75,
+        "scope": "track",
+        "source": "provider"
+      },
+      "performers": "Performer, MainArtist",
+      "quality": {
+        "bits": 24,
+        "codec": "flac",
+        "rate": 96000
+      },
+      "ref": "track:42",
+      "release_date": "2024-02-03",
+      "title": "Fixture song",
+      "track_number": 1,
+      "work": "Work",
+      "year": 2024
+    },
+    "input": {
+      "album": {
+        "artist": {
+          "id": 8,
+          "name": "Performer"
+        },
+        "id": "fixture-album",
+        "image": {
+          "large": "https://fixture.test/cover.jpg"
+        },
+        "release_date_original": "2024-02-03",
+        "title": "Fixture album"
+      },
+      "audio_info": {
+        "replaygain_track_gain": -3.5,
+        "replaygain_track_peak": 0.75
+      },
+      "composer": {
+        "id": 8,
+        "name": "Composer"
+      },
+      "duration": 90,
+      "id": 42,
+      "isrc": "FIXTURE42",
+      "maximum_bit_depth": 24,
+      "maximum_sampling_rate": 96,
+      "media_number": 1,
+      "performer": {
+        "id": 8,
+        "name": "Performer"
+      },
+      "performers": "Performer, MainArtist",
+      "streamable": true,
+      "title": "Fixture song",
+      "track_number": 1,
+      "work": "Work"
+    },
+    "kind": "track",
+    "parent": {
+      "artist": {
+        "id": 8,
+        "name": "Performer"
+      },
+      "copyright": "Fixture rights",
+      "description": "Fixture description",
+      "duration": 180,
+      "favorited_at": 1700000000,
+      "genre": {
+        "id": 3,
+        "name": "Jazz"
+      },
+      "id": "fixture-album",
+      "image": {
+        "large": "https://fixture.test/cover.jpg"
+      },
+      "label": {
+        "id": 9,
+        "name": "Label"
+      },
+      "maximum_bit_depth": 24,
+      "maximum_sampling_rate": 96,
+      "release_date_original": "2024-02-03",
+      "release_type": "album",
+      "streamable": true,
+      "title": "Fixture album",
+      "tracks": {
+        "items": [
+          {
+            "album": {
+              "artist": {
+                "id": 8,
+                "name": "Performer"
+              },
+              "id": "fixture-album",
+              "image": {
+                "large": "https://fixture.test/cover.jpg"
+              },
+              "release_date_original": "2024-02-03",
+              "title": "Fixture album"
+            },
+            "audio_info": {
+              "replaygain_track_gain": -3.5,
+              "replaygain_track_peak": 0.75
+            },
+            "composer": {
+              "id": 8,
+              "name": "Composer"
+            },
+            "duration": 90,
+            "id": 42,
+            "isrc": "FIXTURE42",
+            "maximum_bit_depth": 24,
+            "maximum_sampling_rate": 96,
+            "media_number": 1,
+            "performer": {
+              "id": 8,
+              "name": "Performer"
+            },
+            "performers": "Performer, MainArtist",
+            "streamable": true,
+            "title": "Fixture song",
+            "track_number": 1,
+            "work": "Work"
+          },
+          {
+            "album": {
+              "artist": {
+                "id": 8,
+                "name": "Performer"
+              },
+              "id": "fixture-album",
+              "image": {
+                "large": "https://fixture.test/cover.jpg"
+              },
+              "release_date_original": "2024-02-03",
+              "title": "Fixture album"
+            },
+            "audio_info": {
+              "replaygain_track_gain": -3.5,
+              "replaygain_track_peak": 0.75
+            },
+            "composer": {
+              "id": 8,
+              "name": "Composer"
+            },
+            "duration": 90,
+            "id": 42,
+            "isrc": "FIXTURE42",
+            "maximum_bit_depth": 24,
+            "maximum_sampling_rate": 96,
+            "media_number": 1,
+            "performer": {
+              "id": 8,
+              "name": "Performer"
+            },
+            "performers": "Performer, MainArtist",
+            "streamable": true,
+            "title": "Fixture song",
+            "track_number": 1,
+            "work": "Work"
+          }
+        ],
+        "total": 2
+      },
+      "tracks_count": 2,
+      "upc": "123"
+    }
+  },
+  {
+    "case": "artist-3",
+    "expected": {
+      "image_fallback": "user-star",
+      "kind": "artist",
+      "ref": "artist:42"
+    },
+    "input": {
+      "album": {
+        "artist": {
+          "id": 8,
+          "name": "Performer"
+        },
+        "id": "fixture-album",
+        "image": {
+          "large": "https://fixture.test/cover.jpg"
+        },
+        "release_date_original": "2024-02-03",
+        "title": "Fixture album"
+      },
+      "audio_info": {
+        "replaygain_track_gain": -3.5,
+        "replaygain_track_peak": 0.75
+      },
+      "composer": {
+        "id": 8,
+        "name": "Composer"
+      },
+      "duration": 90,
+      "id": 42,
+      "isrc": "FIXTURE42",
+      "maximum_bit_depth": 24,
+      "maximum_sampling_rate": 96,
+      "media_number": 1,
+      "performer": {
+        "id": 8,
+        "name": "Performer"
+      },
+      "performers": "Performer, MainArtist",
+      "streamable": true,
+      "title": "Fixture song",
+      "track_number": 1,
+      "work": "Work"
+    },
+    "kind": "artist",
+    "parent": null
+  },
+  {
+    "case": "label-3",
+    "expected": {
+      "art_fit": "contain",
+      "image_fallback": "disc",
+      "kind": "label",
+      "ref": "label:42"
+    },
+    "input": {
+      "album": {
+        "artist": {
+          "id": 8,
+          "name": "Performer"
+        },
+        "id": "fixture-album",
+        "image": {
+          "large": "https://fixture.test/cover.jpg"
+        },
+        "release_date_original": "2024-02-03",
+        "title": "Fixture album"
+      },
+      "audio_info": {
+        "replaygain_track_gain": -3.5,
+        "replaygain_track_peak": 0.75
+      },
+      "composer": {
+        "id": 8,
+        "name": "Composer"
+      },
+      "duration": 90,
+      "id": 42,
+      "isrc": "FIXTURE42",
+      "maximum_bit_depth": 24,
+      "maximum_sampling_rate": 96,
+      "media_number": 1,
+      "performer": {
+        "id": 8,
+        "name": "Performer"
+      },
+      "performers": "Performer, MainArtist",
+      "streamable": true,
+      "title": "Fixture song",
+      "track_number": 1,
+      "work": "Work"
+    },
+    "kind": "label",
+    "parent": null
+  },
+  {
+    "case": "playlist-3",
+    "expected": {
+      "duration_ms": 90000,
+      "kind": "playlist",
+      "ref": "playlist:42",
+      "title": "Fixture song"
+    },
+    "input": {
+      "album": {
+        "artist": {
+          "id": 8,
+          "name": "Performer"
+        },
+        "id": "fixture-album",
+        "image": {
+          "large": "https://fixture.test/cover.jpg"
+        },
+        "release_date_original": "2024-02-03",
+        "title": "Fixture album"
+      },
+      "audio_info": {
+        "replaygain_track_gain": -3.5,
+        "replaygain_track_peak": 0.75
+      },
+      "composer": {
+        "id": 8,
+        "name": "Composer"
+      },
+      "duration": 90,
+      "id": 42,
+      "isrc": "FIXTURE42",
+      "maximum_bit_depth": 24,
+      "maximum_sampling_rate": 96,
+      "media_number": 1,
+      "performer": {
+        "id": 8,
+        "name": "Performer"
+      },
+      "performers": "Performer, MainArtist",
+      "streamable": true,
+      "title": "Fixture song",
+      "track_number": 1,
+      "work": "Work"
+    },
+    "kind": "playlist",
+    "parent": null
+  },
+  {
+    "case": "album-4",
+    "expected": {
+      "description": "Fixture list",
+      "duration_ms": 180000,
+      "kind": "album",
+      "ref": "album:11",
+      "tracks": 2
+    },
+    "input": {
+      "description": "Fixture list",
+      "duration": 180,
+      "id": 11,
+      "is_public": true,
+      "name": "Fixture playlist",
+      "owner": {
+        "id": 7,
+        "name": "Fixture"
+      },
+      "tracks": {
+        "items": [
+          {
+            "album": {
+              "artist": {
+                "id": 8,
+                "name": "Performer"
+              },
+              "id": "fixture-album",
+              "image": {
+                "large": "https://fixture.test/cover.jpg"
+              },
+              "release_date_original": "2024-02-03",
+              "title": "Fixture album"
+            },
+            "audio_info": {
+              "replaygain_track_gain": -3.5,
+              "replaygain_track_peak": 0.75
+            },
+            "composer": {
+              "id": 8,
+              "name": "Composer"
+            },
+            "duration": 90,
+            "id": 42,
+            "isrc": "FIXTURE42",
+            "maximum_bit_depth": 24,
+            "maximum_sampling_rate": 96,
+            "media_number": 1,
+            "performer": {
+              "id": 8,
+              "name": "Performer"
+            },
+            "performers": "Performer, MainArtist",
+            "playlist_track_id": 81,
+            "streamable": true,
+            "title": "Fixture song",
+            "track_number": 1,
+            "work": "Work"
+          },
+          {
+            "album": {
+              "artist": {
+                "id": 8,
+                "name": "Performer"
+              },
+              "id": "fixture-album",
+              "image": {
+                "large": "https://fixture.test/cover.jpg"
+              },
+              "release_date_original": "2024-02-03",
+              "title": "Fixture album"
+            },
+            "audio_info": {
+              "replaygain_track_gain": -3.5,
+              "replaygain_track_peak": 0.75
+            },
+            "composer": {
+              "id": 8,
+              "name": "Composer"
+            },
+            "duration": 90,
+            "id": 42,
+            "isrc": "FIXTURE42",
+            "maximum_bit_depth": 24,
+            "maximum_sampling_rate": 96,
+            "media_number": 1,
+            "performer": {
+              "id": 8,
+              "name": "Performer"
+            },
+            "performers": "Performer, MainArtist",
+            "playlist_track_id": 82,
+            "streamable": true,
+            "title": "Fixture song",
+            "track_number": 1,
+            "work": "Work"
+          }
+        ],
+        "total": 2
+      },
+      "tracks_count": 2
+    },
+    "kind": "album",
+    "parent": null
+  },
+  {
+    "case": "track-4",
+    "expected": {
+      "album": "Fixture album",
+      "album_ref": "album:fixture-album",
+      "artist": "Performer",
+      "artist_ref": "artist:8",
+      "duration_ms": 180000,
+      "genre": "Jazz",
+      "genres": [
+        "Jazz"
+      ],
+      "image": "https://fixture.test/cover.jpg",
+      "kind": "track",
+      "label": "Label",
+      "label_ref": "label:9",
+      "ref": "track:11",
+      "release_date": "2024-02-03",
+      "release_type": "album",
+      "year": 2024
+    },
+    "input": {
+      "description": "Fixture list",
+      "duration": 180,
+      "id": 11,
+      "is_public": true,
+      "name": "Fixture playlist",
+      "owner": {
+        "id": 7,
+        "name": "Fixture"
+      },
+      "tracks": {
+        "items": [
+          {
+            "album": {
+              "artist": {
+                "id": 8,
+                "name": "Performer"
+              },
+              "id": "fixture-album",
+              "image": {
+                "large": "https://fixture.test/cover.jpg"
+              },
+              "release_date_original": "2024-02-03",
+              "title": "Fixture album"
+            },
+            "audio_info": {
+              "replaygain_track_gain": -3.5,
+              "replaygain_track_peak": 0.75
+            },
+            "composer": {
+              "id": 8,
+              "name": "Composer"
+            },
+            "duration": 90,
+            "id": 42,
+            "isrc": "FIXTURE42",
+            "maximum_bit_depth": 24,
+            "maximum_sampling_rate": 96,
+            "media_number": 1,
+            "performer": {
+              "id": 8,
+              "name": "Performer"
+            },
+            "performers": "Performer, MainArtist",
+            "playlist_track_id": 81,
+            "streamable": true,
+            "title": "Fixture song",
+            "track_number": 1,
+            "work": "Work"
+          },
+          {
+            "album": {
+              "artist": {
+                "id": 8,
+                "name": "Performer"
+              },
+              "id": "fixture-album",
+              "image": {
+                "large": "https://fixture.test/cover.jpg"
+              },
+              "release_date_original": "2024-02-03",
+              "title": "Fixture album"
+            },
+            "audio_info": {
+              "replaygain_track_gain": -3.5,
+              "replaygain_track_peak": 0.75
+            },
+            "composer": {
+              "id": 8,
+              "name": "Composer"
+            },
+            "duration": 90,
+            "id": 42,
+            "isrc": "FIXTURE42",
+            "maximum_bit_depth": 24,
+            "maximum_sampling_rate": 96,
+            "media_number": 1,
+            "performer": {
+              "id": 8,
+              "name": "Performer"
+            },
+            "performers": "Performer, MainArtist",
+            "playlist_track_id": 82,
+            "streamable": true,
+            "title": "Fixture song",
+            "track_number": 1,
+            "work": "Work"
+          }
+        ],
+        "total": 2
+      },
+      "tracks_count": 2
+    },
+    "kind": "track",
+    "parent": {
+      "artist": {
+        "id": 8,
+        "name": "Performer"
+      },
+      "copyright": "Fixture rights",
+      "description": "Fixture description",
+      "duration": 180,
+      "favorited_at": 1700000000,
+      "genre": {
+        "id": 3,
+        "name": "Jazz"
+      },
+      "id": "fixture-album",
+      "image": {
+        "large": "https://fixture.test/cover.jpg"
+      },
+      "label": {
+        "id": 9,
+        "name": "Label"
+      },
+      "maximum_bit_depth": 24,
+      "maximum_sampling_rate": 96,
+      "release_date_original": "2024-02-03",
+      "release_type": "album",
+      "streamable": true,
+      "title": "Fixture album",
+      "tracks": {
+        "items": [
+          {
+            "album": {
+              "artist": {
+                "id": 8,
+                "name": "Performer"
+              },
+              "id": "fixture-album",
+              "image": {
+                "large": "https://fixture.test/cover.jpg"
+              },
+              "release_date_original": "2024-02-03",
+              "title": "Fixture album"
+            },
+            "audio_info": {
+              "replaygain_track_gain": -3.5,
+              "replaygain_track_peak": 0.75
+            },
+            "composer": {
+              "id": 8,
+              "name": "Composer"
+            },
+            "duration": 90,
+            "id": 42,
+            "isrc": "FIXTURE42",
+            "maximum_bit_depth": 24,
+            "maximum_sampling_rate": 96,
+            "media_number": 1,
+            "performer": {
+              "id": 8,
+              "name": "Performer"
+            },
+            "performers": "Performer, MainArtist",
+            "streamable": true,
+            "title": "Fixture song",
+            "track_number": 1,
+            "work": "Work"
+          },
+          {
+            "album": {
+              "artist": {
+                "id": 8,
+                "name": "Performer"
+              },
+              "id": "fixture-album",
+              "image": {
+                "large": "https://fixture.test/cover.jpg"
+              },
+              "release_date_original": "2024-02-03",
+              "title": "Fixture album"
+            },
+            "audio_info": {
+              "replaygain_track_gain": -3.5,
+              "replaygain_track_peak": 0.75
+            },
+            "composer": {
+              "id": 8,
+              "name": "Composer"
+            },
+            "duration": 90,
+            "id": 42,
+            "isrc": "FIXTURE42",
+            "maximum_bit_depth": 24,
+            "maximum_sampling_rate": 96,
+            "media_number": 1,
+            "performer": {
+              "id": 8,
+              "name": "Performer"
+            },
+            "performers": "Performer, MainArtist",
+            "streamable": true,
+            "title": "Fixture song",
+            "track_number": 1,
+            "work": "Work"
+          }
+        ],
+        "total": 2
+      },
+      "tracks_count": 2,
+      "upc": "123"
+    }
+  },
+  {
+    "case": "artist-4",
+    "expected": {
+      "image_fallback": "user-star",
+      "kind": "artist",
+      "ref": "artist:11",
+      "title": "Fixture playlist"
+    },
+    "input": {
+      "description": "Fixture list",
+      "duration": 180,
+      "id": 11,
+      "is_public": true,
+      "name": "Fixture playlist",
+      "owner": {
+        "id": 7,
+        "name": "Fixture"
+      },
+      "tracks": {
+        "items": [
+          {
+            "album": {
+              "artist": {
+                "id": 8,
+                "name": "Performer"
+              },
+              "id": "fixture-album",
+              "image": {
+                "large": "https://fixture.test/cover.jpg"
+              },
+              "release_date_original": "2024-02-03",
+              "title": "Fixture album"
+            },
+            "audio_info": {
+              "replaygain_track_gain": -3.5,
+              "replaygain_track_peak": 0.75
+            },
+            "composer": {
+              "id": 8,
+              "name": "Composer"
+            },
+            "duration": 90,
+            "id": 42,
+            "isrc": "FIXTURE42",
+            "maximum_bit_depth": 24,
+            "maximum_sampling_rate": 96,
+            "media_number": 1,
+            "performer": {
+              "id": 8,
+              "name": "Performer"
+            },
+            "performers": "Performer, MainArtist",
+            "playlist_track_id": 81,
+            "streamable": true,
+            "title": "Fixture song",
+            "track_number": 1,
+            "work": "Work"
+          },
+          {
+            "album": {
+              "artist": {
+                "id": 8,
+                "name": "Performer"
+              },
+              "id": "fixture-album",
+              "image": {
+                "large": "https://fixture.test/cover.jpg"
+              },
+              "release_date_original": "2024-02-03",
+              "title": "Fixture album"
+            },
+            "audio_info": {
+              "replaygain_track_gain": -3.5,
+              "replaygain_track_peak": 0.75
+            },
+            "composer": {
+              "id": 8,
+              "name": "Composer"
+            },
+            "duration": 90,
+            "id": 42,
+            "isrc": "FIXTURE42",
+            "maximum_bit_depth": 24,
+            "maximum_sampling_rate": 96,
+            "media_number": 1,
+            "performer": {
+              "id": 8,
+              "name": "Performer"
+            },
+            "performers": "Performer, MainArtist",
+            "playlist_track_id": 82,
+            "streamable": true,
+            "title": "Fixture song",
+            "track_number": 1,
+            "work": "Work"
+          }
+        ],
+        "total": 2
+      },
+      "tracks_count": 2
+    },
+    "kind": "artist",
+    "parent": null
+  },
+  {
+    "case": "label-4",
+    "expected": {
+      "art_fit": "contain",
+      "description": "Fixture list",
+      "image_fallback": "disc",
+      "kind": "label",
+      "ref": "label:11",
+      "title": "Fixture playlist"
+    },
+    "input": {
+      "description": "Fixture list",
+      "duration": 180,
+      "id": 11,
+      "is_public": true,
+      "name": "Fixture playlist",
+      "owner": {
+        "id": 7,
+        "name": "Fixture"
+      },
+      "tracks": {
+        "items": [
+          {
+            "album": {
+              "artist": {
+                "id": 8,
+                "name": "Performer"
+              },
+              "id": "fixture-album",
+              "image": {
+                "large": "https://fixture.test/cover.jpg"
+              },
+              "release_date_original": "2024-02-03",
+              "title": "Fixture album"
+            },
+            "audio_info": {
+              "replaygain_track_gain": -3.5,
+              "replaygain_track_peak": 0.75
+            },
+            "composer": {
+              "id": 8,
+              "name": "Composer"
+            },
+            "duration": 90,
+            "id": 42,
+            "isrc": "FIXTURE42",
+            "maximum_bit_depth": 24,
+            "maximum_sampling_rate": 96,
+            "media_number": 1,
+            "performer": {
+              "id": 8,
+              "name": "Performer"
+            },
+            "performers": "Performer, MainArtist",
+            "playlist_track_id": 81,
+            "streamable": true,
+            "title": "Fixture song",
+            "track_number": 1,
+            "work": "Work"
+          },
+          {
+            "album": {
+              "artist": {
+                "id": 8,
+                "name": "Performer"
+              },
+              "id": "fixture-album",
+              "image": {
+                "large": "https://fixture.test/cover.jpg"
+              },
+              "release_date_original": "2024-02-03",
+              "title": "Fixture album"
+            },
+            "audio_info": {
+              "replaygain_track_gain": -3.5,
+              "replaygain_track_peak": 0.75
+            },
+            "composer": {
+              "id": 8,
+              "name": "Composer"
+            },
+            "duration": 90,
+            "id": 42,
+            "isrc": "FIXTURE42",
+            "maximum_bit_depth": 24,
+            "maximum_sampling_rate": 96,
+            "media_number": 1,
+            "performer": {
+              "id": 8,
+              "name": "Performer"
+            },
+            "performers": "Performer, MainArtist",
+            "playlist_track_id": 82,
+            "streamable": true,
+            "title": "Fixture song",
+            "track_number": 1,
+            "work": "Work"
+          }
+        ],
+        "total": 2
+      },
+      "tracks_count": 2
+    },
+    "kind": "label",
+    "parent": null
+  },
+  {
+    "case": "playlist-4",
+    "expected": {
+      "artist": "Fixture",
+      "description": "Fixture list",
+      "duration_ms": 180000,
+      "kind": "playlist",
+      "ref": "playlist:11",
+      "title": "Fixture playlist",
+      "tracks": 2
+    },
+    "input": {
+      "description": "Fixture list",
+      "duration": 180,
+      "id": 11,
+      "is_public": true,
+      "name": "Fixture playlist",
+      "owner": {
+        "id": 7,
+        "name": "Fixture"
+      },
+      "tracks": {
+        "items": [
+          {
+            "album": {
+              "artist": {
+                "id": 8,
+                "name": "Performer"
+              },
+              "id": "fixture-album",
+              "image": {
+                "large": "https://fixture.test/cover.jpg"
+              },
+              "release_date_original": "2024-02-03",
+              "title": "Fixture album"
+            },
+            "audio_info": {
+              "replaygain_track_gain": -3.5,
+              "replaygain_track_peak": 0.75
+            },
+            "composer": {
+              "id": 8,
+              "name": "Composer"
+            },
+            "duration": 90,
+            "id": 42,
+            "isrc": "FIXTURE42",
+            "maximum_bit_depth": 24,
+            "maximum_sampling_rate": 96,
+            "media_number": 1,
+            "performer": {
+              "id": 8,
+              "name": "Performer"
+            },
+            "performers": "Performer, MainArtist",
+            "playlist_track_id": 81,
+            "streamable": true,
+            "title": "Fixture song",
+            "track_number": 1,
+            "work": "Work"
+          },
+          {
+            "album": {
+              "artist": {
+                "id": 8,
+                "name": "Performer"
+              },
+              "id": "fixture-album",
+              "image": {
+                "large": "https://fixture.test/cover.jpg"
+              },
+              "release_date_original": "2024-02-03",
+              "title": "Fixture album"
+            },
+            "audio_info": {
+              "replaygain_track_gain": -3.5,
+              "replaygain_track_peak": 0.75
+            },
+            "composer": {
+              "id": 8,
+              "name": "Composer"
+            },
+            "duration": 90,
+            "id": 42,
+            "isrc": "FIXTURE42",
+            "maximum_bit_depth": 24,
+            "maximum_sampling_rate": 96,
+            "media_number": 1,
+            "performer": {
+              "id": 8,
+              "name": "Performer"
+            },
+            "performers": "Performer, MainArtist",
+            "playlist_track_id": 82,
+            "streamable": true,
+            "title": "Fixture song",
+            "track_number": 1,
+            "work": "Work"
+          }
+        ],
+        "total": 2
+      },
+      "tracks_count": 2
+    },
+    "kind": "playlist",
+    "parent": null
+  },
+  {
+    "case": "album-5",
+    "expected": {
+      "image": "https://fixture.test/image",
+      "kind": "album",
+      "ref": "album:0042"
+    },
+    "input": {
+      "albums_count": 3,
+      "id": "0042",
+      "image": {
+        "small": "//fixture.test/image"
+      },
+      "name": {
+        "display": " Display "
+      }
+    },
+    "kind": "album",
+    "parent": null
+  },
+  {
+    "case": "track-5",
+    "expected": {
+      "album": "Fixture album",
+      "album_ref": "album:fixture-album",
+      "artist": "Performer",
+      "artist_ref": "artist:8",
+      "genre": "Jazz",
+      "genres": [
+        "Jazz"
+      ],
+      "image": "https://fixture.test/cover.jpg",
+      "kind": "track",
+      "label": "Label",
+      "label_ref": "label:9",
+      "ref": "track:0042",
+      "release_date": "2024-02-03",
+      "release_type": "album",
+      "year": 2024
+    },
+    "input": {
+      "albums_count": 3,
+      "id": "0042",
+      "image": {
+        "small": "//fixture.test/image"
+      },
+      "name": {
+        "display": " Display "
+      }
+    },
+    "kind": "track",
+    "parent": {
+      "artist": {
+        "id": 8,
+        "name": "Performer"
+      },
+      "copyright": "Fixture rights",
+      "description": "Fixture description",
+      "duration": 180,
+      "favorited_at": 1700000000,
+      "genre": {
+        "id": 3,
+        "name": "Jazz"
+      },
+      "id": "fixture-album",
+      "image": {
+        "large": "https://fixture.test/cover.jpg"
+      },
+      "label": {
+        "id": 9,
+        "name": "Label"
+      },
+      "maximum_bit_depth": 24,
+      "maximum_sampling_rate": 96,
+      "release_date_original": "2024-02-03",
+      "release_type": "album",
+      "streamable": true,
+      "title": "Fixture album",
+      "tracks": {
+        "items": [
+          {
+            "album": {
+              "artist": {
+                "id": 8,
+                "name": "Performer"
+              },
+              "id": "fixture-album",
+              "image": {
+                "large": "https://fixture.test/cover.jpg"
+              },
+              "release_date_original": "2024-02-03",
+              "title": "Fixture album"
+            },
+            "audio_info": {
+              "replaygain_track_gain": -3.5,
+              "replaygain_track_peak": 0.75
+            },
+            "composer": {
+              "id": 8,
+              "name": "Composer"
+            },
+            "duration": 90,
+            "id": 42,
+            "isrc": "FIXTURE42",
+            "maximum_bit_depth": 24,
+            "maximum_sampling_rate": 96,
+            "media_number": 1,
+            "performer": {
+              "id": 8,
+              "name": "Performer"
+            },
+            "performers": "Performer, MainArtist",
+            "streamable": true,
+            "title": "Fixture song",
+            "track_number": 1,
+            "work": "Work"
+          },
+          {
+            "album": {
+              "artist": {
+                "id": 8,
+                "name": "Performer"
+              },
+              "id": "fixture-album",
+              "image": {
+                "large": "https://fixture.test/cover.jpg"
+              },
+              "release_date_original": "2024-02-03",
+              "title": "Fixture album"
+            },
+            "audio_info": {
+              "replaygain_track_gain": -3.5,
+              "replaygain_track_peak": 0.75
+            },
+            "composer": {
+              "id": 8,
+              "name": "Composer"
+            },
+            "duration": 90,
+            "id": 42,
+            "isrc": "FIXTURE42",
+            "maximum_bit_depth": 24,
+            "maximum_sampling_rate": 96,
+            "media_number": 1,
+            "performer": {
+              "id": 8,
+              "name": "Performer"
+            },
+            "performers": "Performer, MainArtist",
+            "streamable": true,
+            "title": "Fixture song",
+            "track_number": 1,
+            "work": "Work"
+          }
+        ],
+        "total": 2
+      },
+      "tracks_count": 2,
+      "upc": "123"
+    }
+  },
+  {
+    "case": "artist-5",
+    "expected": {
+      "albums": 3,
+      "image": "https://fixture.test/image",
+      "image_fallback": "user-star",
+      "kind": "artist",
+      "ref": "artist:0042",
+      "title": "Display"
+    },
+    "input": {
+      "albums_count": 3,
+      "id": "0042",
+      "image": {
+        "small": "//fixture.test/image"
+      },
+      "name": {
+        "display": " Display "
+      }
+    },
+    "kind": "artist",
+    "parent": null
+  },
+  {
+    "case": "label-5",
+    "expected": {
+      "art_fit": "contain",
+      "image": "https://fixture.test/image",
+      "image_fallback": "disc",
+      "kind": "label",
+      "ref": "label:42"
+    },
+    "input": {
+      "albums_count": 3,
+      "id": "0042",
+      "image": {
+        "small": "//fixture.test/image"
+      },
+      "name": {
+        "display": " Display "
+      }
+    },
+    "kind": "label",
+    "parent": null
+  },
+  {
+    "case": "playlist-5",
+    "expected": {
+      "art_fit": "contain",
+      "image": "https://fixture.test/image",
+      "kind": "playlist",
+      "ref": "playlist:0042"
+    },
+    "input": {
+      "albums_count": 3,
+      "id": "0042",
+      "image": {
+        "small": "//fixture.test/image"
+      },
+      "name": {
+        "display": " Display "
+      }
+    },
+    "kind": "playlist",
+    "parent": null
+  },
+  {
+    "case": "album-6",
+    "expected": {
+      "artist": "Artist",
+      "kind": "album",
+      "ref": "album:9",
+      "release_type": "ep",
+      "title": "Title (Deluxe)"
+    },
+    "input": {
+      "artist": {
+        "name": "Artist"
+      },
+      "genre": {
+        "name": "Music"
+      },
+      "id": 9,
+      "product_type": "epmini",
+      "release_type": "unknown",
+      "title": "Title",
+      "version": "Deluxe"
+    },
+    "kind": "album",
+    "parent": null
+  },
+  {
+    "case": "track-6",
+    "expected": {
+      "album": "Fixture album",
+      "album_ref": "album:fixture-album",
+      "artist": "Artist",
+      "genre": "Jazz",
+      "genres": [
+        "Jazz"
+      ],
+      "image": "https://fixture.test/cover.jpg",
+      "kind": "track",
+      "label": "Label",
+      "label_ref": "label:9",
+      "ref": "track:9",
+      "release_date": "2024-02-03",
+      "release_type": "album",
+      "title": "Title (Deluxe)",
+      "year": 2024
+    },
+    "input": {
+      "artist": {
+        "name": "Artist"
+      },
+      "genre": {
+        "name": "Music"
+      },
+      "id": 9,
+      "product_type": "epmini",
+      "release_type": "unknown",
+      "title": "Title",
+      "version": "Deluxe"
+    },
+    "kind": "track",
+    "parent": {
+      "artist": {
+        "id": 8,
+        "name": "Performer"
+      },
+      "copyright": "Fixture rights",
+      "description": "Fixture description",
+      "duration": 180,
+      "favorited_at": 1700000000,
+      "genre": {
+        "id": 3,
+        "name": "Jazz"
+      },
+      "id": "fixture-album",
+      "image": {
+        "large": "https://fixture.test/cover.jpg"
+      },
+      "label": {
+        "id": 9,
+        "name": "Label"
+      },
+      "maximum_bit_depth": 24,
+      "maximum_sampling_rate": 96,
+      "release_date_original": "2024-02-03",
+      "release_type": "album",
+      "streamable": true,
+      "title": "Fixture album",
+      "tracks": {
+        "items": [
+          {
+            "album": {
+              "artist": {
+                "id": 8,
+                "name": "Performer"
+              },
+              "id": "fixture-album",
+              "image": {
+                "large": "https://fixture.test/cover.jpg"
+              },
+              "release_date_original": "2024-02-03",
+              "title": "Fixture album"
+            },
+            "audio_info": {
+              "replaygain_track_gain": -3.5,
+              "replaygain_track_peak": 0.75
+            },
+            "composer": {
+              "id": 8,
+              "name": "Composer"
+            },
+            "duration": 90,
+            "id": 42,
+            "isrc": "FIXTURE42",
+            "maximum_bit_depth": 24,
+            "maximum_sampling_rate": 96,
+            "media_number": 1,
+            "performer": {
+              "id": 8,
+              "name": "Performer"
+            },
+            "performers": "Performer, MainArtist",
+            "streamable": true,
+            "title": "Fixture song",
+            "track_number": 1,
+            "work": "Work"
+          },
+          {
+            "album": {
+              "artist": {
+                "id": 8,
+                "name": "Performer"
+              },
+              "id": "fixture-album",
+              "image": {
+                "large": "https://fixture.test/cover.jpg"
+              },
+              "release_date_original": "2024-02-03",
+              "title": "Fixture album"
+            },
+            "audio_info": {
+              "replaygain_track_gain": -3.5,
+              "replaygain_track_peak": 0.75
+            },
+            "composer": {
+              "id": 8,
+              "name": "Composer"
+            },
+            "duration": 90,
+            "id": 42,
+            "isrc": "FIXTURE42",
+            "maximum_bit_depth": 24,
+            "maximum_sampling_rate": 96,
+            "media_number": 1,
+            "performer": {
+              "id": 8,
+              "name": "Performer"
+            },
+            "performers": "Performer, MainArtist",
+            "streamable": true,
+            "title": "Fixture song",
+            "track_number": 1,
+            "work": "Work"
+          }
+        ],
+        "total": 2
+      },
+      "tracks_count": 2,
+      "upc": "123"
+    }
+  },
+  {
+    "case": "artist-6",
+    "expected": {
+      "image_fallback": "user-star",
+      "kind": "artist",
+      "ref": "artist:9"
+    },
+    "input": {
+      "artist": {
+        "name": "Artist"
+      },
+      "genre": {
+        "name": "Music"
+      },
+      "id": 9,
+      "product_type": "epmini",
+      "release_type": "unknown",
+      "title": "Title",
+      "version": "Deluxe"
+    },
+    "kind": "artist",
+    "parent": null
+  },
+  {
+    "case": "label-6",
+    "expected": {
+      "art_fit": "contain",
+      "image_fallback": "disc",
+      "kind": "label",
+      "ref": "label:9"
+    },
+    "input": {
+      "artist": {
+        "name": "Artist"
+      },
+      "genre": {
+        "name": "Music"
+      },
+      "id": 9,
+      "product_type": "epmini",
+      "release_type": "unknown",
+      "title": "Title",
+      "version": "Deluxe"
+    },
+    "kind": "label",
+    "parent": null
+  },
+  {
+    "case": "playlist-6",
+    "expected": {
+      "kind": "playlist",
+      "ref": "playlist:9",
+      "title": "Title"
+    },
+    "input": {
+      "artist": {
+        "name": "Artist"
+      },
+      "genre": {
+        "name": "Music"
+      },
+      "id": 9,
+      "product_type": "epmini",
+      "release_type": "unknown",
+      "title": "Title",
+      "version": "Deluxe"
+    },
+    "kind": "playlist",
+    "parent": null
+  },
+  {
+    "case": "album-7",
+    "expected": {
+      "available": false,
+      "composers": [
+        "Composer"
+      ],
+      "explicit": false,
+      "kind": "album",
+      "ref": "album:42",
+      "title": "Title (Live)"
+    },
+    "input": {
+      "composer": {
+        "id": 8,
+        "name": "Composer"
+      },
+      "id": 42,
+      "parental_warning": false,
+      "streamable": false,
+      "title": "Title (Live)",
+      "version": "Live",
+      "work": "Work"
+    },
+    "kind": "album",
+    "parent": null
+  },
+  {
+    "case": "track-7",
+    "expected": {
+      "album": "Fixture album",
+      "album_ref": "album:fixture-album",
+      "artist": "Performer",
+      "artist_ref": "artist:8",
+      "available": false,
+      "composer": "Composer",
+      "composer_ref": "artist:8",
+      "composers": [
+        "Composer"
+      ],
+      "explicit": false,
+      "genre": "Jazz",
+      "genres": [
+        "Jazz"
+      ],
+      "image": "https://fixture.test/cover.jpg",
+      "kind": "track",
+      "label": "Label",
+      "label_ref": "label:9",
+      "ref": "track:42",
+      "release_date": "2024-02-03",
+      "release_type": "album",
+      "title": "Title (Live)",
+      "work": "Work",
+      "year": 2024
+    },
+    "input": {
+      "composer": {
+        "id": 8,
+        "name": "Composer"
+      },
+      "id": 42,
+      "parental_warning": false,
+      "streamable": false,
+      "title": "Title (Live)",
+      "version": "Live",
+      "work": "Work"
+    },
+    "kind": "track",
+    "parent": {
+      "artist": {
+        "id": 8,
+        "name": "Performer"
+      },
+      "copyright": "Fixture rights",
+      "description": "Fixture description",
+      "duration": 180,
+      "favorited_at": 1700000000,
+      "genre": {
+        "id": 3,
+        "name": "Jazz"
+      },
+      "id": "fixture-album",
+      "image": {
+        "large": "https://fixture.test/cover.jpg"
+      },
+      "label": {
+        "id": 9,
+        "name": "Label"
+      },
+      "maximum_bit_depth": 24,
+      "maximum_sampling_rate": 96,
+      "release_date_original": "2024-02-03",
+      "release_type": "album",
+      "streamable": true,
+      "title": "Fixture album",
+      "tracks": {
+        "items": [
+          {
+            "album": {
+              "artist": {
+                "id": 8,
+                "name": "Performer"
+              },
+              "id": "fixture-album",
+              "image": {
+                "large": "https://fixture.test/cover.jpg"
+              },
+              "release_date_original": "2024-02-03",
+              "title": "Fixture album"
+            },
+            "audio_info": {
+              "replaygain_track_gain": -3.5,
+              "replaygain_track_peak": 0.75
+            },
+            "composer": {
+              "id": 8,
+              "name": "Composer"
+            },
+            "duration": 90,
+            "id": 42,
+            "isrc": "FIXTURE42",
+            "maximum_bit_depth": 24,
+            "maximum_sampling_rate": 96,
+            "media_number": 1,
+            "performer": {
+              "id": 8,
+              "name": "Performer"
+            },
+            "performers": "Performer, MainArtist",
+            "streamable": true,
+            "title": "Fixture song",
+            "track_number": 1,
+            "work": "Work"
+          },
+          {
+            "album": {
+              "artist": {
+                "id": 8,
+                "name": "Performer"
+              },
+              "id": "fixture-album",
+              "image": {
+                "large": "https://fixture.test/cover.jpg"
+              },
+              "release_date_original": "2024-02-03",
+              "title": "Fixture album"
+            },
+            "audio_info": {
+              "replaygain_track_gain": -3.5,
+              "replaygain_track_peak": 0.75
+            },
+            "composer": {
+              "id": 8,
+              "name": "Composer"
+            },
+            "duration": 90,
+            "id": 42,
+            "isrc": "FIXTURE42",
+            "maximum_bit_depth": 24,
+            "maximum_sampling_rate": 96,
+            "media_number": 1,
+            "performer": {
+              "id": 8,
+              "name": "Performer"
+            },
+            "performers": "Performer, MainArtist",
+            "streamable": true,
+            "title": "Fixture song",
+            "track_number": 1,
+            "work": "Work"
+          }
+        ],
+        "total": 2
+      },
+      "tracks_count": 2,
+      "upc": "123"
+    }
+  },
+  {
+    "case": "artist-7",
+    "expected": {
+      "image_fallback": "user-star",
+      "kind": "artist",
+      "ref": "artist:42"
+    },
+    "input": {
+      "composer": {
+        "id": 8,
+        "name": "Composer"
+      },
+      "id": 42,
+      "parental_warning": false,
+      "streamable": false,
+      "title": "Title (Live)",
+      "version": "Live",
+      "work": "Work"
+    },
+    "kind": "artist",
+    "parent": null
+  },
+  {
+    "case": "label-7",
+    "expected": {
+      "art_fit": "contain",
+      "image_fallback": "disc",
+      "kind": "label",
+      "ref": "label:42"
+    },
+    "input": {
+      "composer": {
+        "id": 8,
+        "name": "Composer"
+      },
+      "id": 42,
+      "parental_warning": false,
+      "streamable": false,
+      "title": "Title (Live)",
+      "version": "Live",
+      "work": "Work"
+    },
+    "kind": "label",
+    "parent": null
+  },
+  {
+    "case": "playlist-7",
+    "expected": {
+      "kind": "playlist",
+      "ref": "playlist:42",
+      "title": "Title (Live)"
+    },
+    "input": {
+      "composer": {
+        "id": 8,
+        "name": "Composer"
+      },
+      "id": 42,
+      "parental_warning": false,
+      "streamable": false,
+      "title": "Title (Live)",
+      "version": "Live",
+      "work": "Work"
+    },
+    "kind": "playlist",
+    "parent": null
+  },
+  {
+    "case": "album-8",
+    "expected": {
+      "description": "Text",
+      "image": "https://static.qobuz.com/images/artists/covers/large/hash.jpg",
+      "kind": "album",
+      "ref": "album:not-number"
+    },
+    "input": {
+      "description": "Text",
+      "id": "not-number",
+      "images": {
+        "portrait": {
+          "format": "jpg",
+          "hash": "hash"
+        }
+      },
+      "name": "Label"
+    },
+    "kind": "album",
+    "parent": null
+  },
+  {
+    "case": "track-8",
+    "expected": {
+      "album": "Fixture album",
+      "album_ref": "album:fixture-album",
+      "artist": "Performer",
+      "artist_ref": "artist:8",
+      "genre": "Jazz",
+      "genres": [
+        "Jazz"
+      ],
+      "image": "https://fixture.test/cover.jpg",
+      "kind": "track",
+      "label": "Label",
+      "label_ref": "label:9",
+      "ref": "track:not-number",
+      "release_date": "2024-02-03",
+      "release_type": "album",
+      "year": 2024
+    },
+    "input": {
+      "description": "Text",
+      "id": "not-number",
+      "images": {
+        "portrait": {
+          "format": "jpg",
+          "hash": "hash"
+        }
+      },
+      "name": "Label"
+    },
+    "kind": "track",
+    "parent": {
+      "artist": {
+        "id": 8,
+        "name": "Performer"
+      },
+      "copyright": "Fixture rights",
+      "description": "Fixture description",
+      "duration": 180,
+      "favorited_at": 1700000000,
+      "genre": {
+        "id": 3,
+        "name": "Jazz"
+      },
+      "id": "fixture-album",
+      "image": {
+        "large": "https://fixture.test/cover.jpg"
+      },
+      "label": {
+        "id": 9,
+        "name": "Label"
+      },
+      "maximum_bit_depth": 24,
+      "maximum_sampling_rate": 96,
+      "release_date_original": "2024-02-03",
+      "release_type": "album",
+      "streamable": true,
+      "title": "Fixture album",
+      "tracks": {
+        "items": [
+          {
+            "album": {
+              "artist": {
+                "id": 8,
+                "name": "Performer"
+              },
+              "id": "fixture-album",
+              "image": {
+                "large": "https://fixture.test/cover.jpg"
+              },
+              "release_date_original": "2024-02-03",
+              "title": "Fixture album"
+            },
+            "audio_info": {
+              "replaygain_track_gain": -3.5,
+              "replaygain_track_peak": 0.75
+            },
+            "composer": {
+              "id": 8,
+              "name": "Composer"
+            },
+            "duration": 90,
+            "id": 42,
+            "isrc": "FIXTURE42",
+            "maximum_bit_depth": 24,
+            "maximum_sampling_rate": 96,
+            "media_number": 1,
+            "performer": {
+              "id": 8,
+              "name": "Performer"
+            },
+            "performers": "Performer, MainArtist",
+            "streamable": true,
+            "title": "Fixture song",
+            "track_number": 1,
+            "work": "Work"
+          },
+          {
+            "album": {
+              "artist": {
+                "id": 8,
+                "name": "Performer"
+              },
+              "id": "fixture-album",
+              "image": {
+                "large": "https://fixture.test/cover.jpg"
+              },
+              "release_date_original": "2024-02-03",
+              "title": "Fixture album"
+            },
+            "audio_info": {
+              "replaygain_track_gain": -3.5,
+              "replaygain_track_peak": 0.75
+            },
+            "composer": {
+              "id": 8,
+              "name": "Composer"
+            },
+            "duration": 90,
+            "id": 42,
+            "isrc": "FIXTURE42",
+            "maximum_bit_depth": 24,
+            "maximum_sampling_rate": 96,
+            "media_number": 1,
+            "performer": {
+              "id": 8,
+              "name": "Performer"
+            },
+            "performers": "Performer, MainArtist",
+            "streamable": true,
+            "title": "Fixture song",
+            "track_number": 1,
+            "work": "Work"
+          }
+        ],
+        "total": 2
+      },
+      "tracks_count": 2,
+      "upc": "123"
+    }
+  },
+  {
+    "case": "artist-8",
+    "expected": {
+      "image": "https://static.qobuz.com/images/artists/covers/large/hash.jpg",
+      "image_fallback": "user-star",
+      "kind": "artist",
+      "ref": "artist:not-number",
+      "title": "Label"
+    },
+    "input": {
+      "description": "Text",
+      "id": "not-number",
+      "images": {
+        "portrait": {
+          "format": "jpg",
+          "hash": "hash"
+        }
+      },
+      "name": "Label"
+    },
+    "kind": "artist",
+    "parent": null
+  },
+  {
+    "case": "label-8",
+    "expected": {
+      "art_fit": "contain",
+      "description": "Text",
+      "image": "https://static.qobuz.com/images/artists/covers/large/hash.jpg",
+      "image_fallback": "disc",
+      "kind": "label",
+      "title": "Label"
+    },
+    "input": {
+      "description": "Text",
+      "id": "not-number",
+      "images": {
+        "portrait": {
+          "format": "jpg",
+          "hash": "hash"
+        }
+      },
+      "name": "Label"
+    },
+    "kind": "label",
+    "parent": null
+  },
+  {
+    "case": "playlist-8",
+    "expected": {
+      "art_fit": "contain",
+      "description": "Text",
+      "image": "https://static.qobuz.com/images/artists/covers/large/hash.jpg",
+      "kind": "playlist",
+      "ref": "playlist:not-number",
+      "title": "Label"
+    },
+    "input": {
+      "description": "Text",
+      "id": "not-number",
+      "images": {
+        "portrait": {
+          "format": "jpg",
+          "hash": "hash"
+        }
+      },
+      "name": "Label"
+    },
+    "kind": "playlist",
+    "parent": null
+  },
+  {
+    "case": "album-9",
+    "expected": {
+      "added_at": 1700000000,
+      "awards": [
+        "Award"
+      ],
+      "booklets": [
+        {
+          "name": "Booklet",
+          "url": "https://fixture.test/booklet.pdf"
+        }
+      ],
+      "kind": "album",
+      "ref": "album:2",
+      "release_date": "2025-01-02",
+      "updated_at": 1700000002,
+      "year": 2025
+    },
+    "input": {
+      "awards": [
+        "Award"
+      ],
+      "favorited_at": 1700000000,
+      "goodies": [
+        {
+          "name": "Booklet",
+          "original_url": "https://fixture.test/booklet.pdf"
+        },
+        {
+          "url": "file:///private"
+        }
+      ],
+      "id": 2,
+      "purchased_at": 1700000001,
+      "release_date_stream": "2025-01-02",
+      "updated_at": 1700000002
+    },
+    "kind": "album",
+    "parent": null
+  },
+  {
+    "case": "track-9",
+    "expected": {
+      "added_at": 1700000000,
+      "album": "Fixture album",
+      "album_ref": "album:fixture-album",
+      "artist": "Performer",
+      "artist_ref": "artist:8",
+      "genre": "Jazz",
+      "genres": [
+        "Jazz"
+      ],
+      "image": "https://fixture.test/cover.jpg",
+      "kind": "track",
+      "label": "Label",
+      "label_ref": "label:9",
+      "ref": "track:2",
+      "release_date": "2024-02-03",
+      "release_type": "album",
+      "updated_at": 1700000002,
+      "year": 2024
+    },
+    "input": {
+      "awards": [
+        "Award"
+      ],
+      "favorited_at": 1700000000,
+      "goodies": [
+        {
+          "name": "Booklet",
+          "original_url": "https://fixture.test/booklet.pdf"
+        },
+        {
+          "url": "file:///private"
+        }
+      ],
+      "id": 2,
+      "purchased_at": 1700000001,
+      "release_date_stream": "2025-01-02",
+      "updated_at": 1700000002
+    },
+    "kind": "track",
+    "parent": {
+      "artist": {
+        "id": 8,
+        "name": "Performer"
+      },
+      "copyright": "Fixture rights",
+      "description": "Fixture description",
+      "duration": 180,
+      "favorited_at": 1700000000,
+      "genre": {
+        "id": 3,
+        "name": "Jazz"
+      },
+      "id": "fixture-album",
+      "image": {
+        "large": "https://fixture.test/cover.jpg"
+      },
+      "label": {
+        "id": 9,
+        "name": "Label"
+      },
+      "maximum_bit_depth": 24,
+      "maximum_sampling_rate": 96,
+      "release_date_original": "2024-02-03",
+      "release_type": "album",
+      "streamable": true,
+      "title": "Fixture album",
+      "tracks": {
+        "items": [
+          {
+            "album": {
+              "artist": {
+                "id": 8,
+                "name": "Performer"
+              },
+              "id": "fixture-album",
+              "image": {
+                "large": "https://fixture.test/cover.jpg"
+              },
+              "release_date_original": "2024-02-03",
+              "title": "Fixture album"
+            },
+            "audio_info": {
+              "replaygain_track_gain": -3.5,
+              "replaygain_track_peak": 0.75
+            },
+            "composer": {
+              "id": 8,
+              "name": "Composer"
+            },
+            "duration": 90,
+            "id": 42,
+            "isrc": "FIXTURE42",
+            "maximum_bit_depth": 24,
+            "maximum_sampling_rate": 96,
+            "media_number": 1,
+            "performer": {
+              "id": 8,
+              "name": "Performer"
+            },
+            "performers": "Performer, MainArtist",
+            "streamable": true,
+            "title": "Fixture song",
+            "track_number": 1,
+            "work": "Work"
+          },
+          {
+            "album": {
+              "artist": {
+                "id": 8,
+                "name": "Performer"
+              },
+              "id": "fixture-album",
+              "image": {
+                "large": "https://fixture.test/cover.jpg"
+              },
+              "release_date_original": "2024-02-03",
+              "title": "Fixture album"
+            },
+            "audio_info": {
+              "replaygain_track_gain": -3.5,
+              "replaygain_track_peak": 0.75
+            },
+            "composer": {
+              "id": 8,
+              "name": "Composer"
+            },
+            "duration": 90,
+            "id": 42,
+            "isrc": "FIXTURE42",
+            "maximum_bit_depth": 24,
+            "maximum_sampling_rate": 96,
+            "media_number": 1,
+            "performer": {
+              "id": 8,
+              "name": "Performer"
+            },
+            "performers": "Performer, MainArtist",
+            "streamable": true,
+            "title": "Fixture song",
+            "track_number": 1,
+            "work": "Work"
+          }
+        ],
+        "total": 2
+      },
+      "tracks_count": 2,
+      "upc": "123"
+    }
+  },
+  {
+    "case": "artist-9",
+    "expected": {
+      "added_at": 1700000000,
+      "image_fallback": "user-star",
+      "kind": "artist",
+      "ref": "artist:2",
+      "release_date": "2025-01-02",
+      "updated_at": 1700000002
+    },
+    "input": {
+      "awards": [
+        "Award"
+      ],
+      "favorited_at": 1700000000,
+      "goodies": [
+        {
+          "name": "Booklet",
+          "original_url": "https://fixture.test/booklet.pdf"
+        },
+        {
+          "url": "file:///private"
+        }
+      ],
+      "id": 2,
+      "purchased_at": 1700000001,
+      "release_date_stream": "2025-01-02",
+      "updated_at": 1700000002
+    },
+    "kind": "artist",
+    "parent": null
+  },
+  {
+    "case": "label-9",
+    "expected": {
+      "art_fit": "contain",
+      "image_fallback": "disc",
+      "kind": "label",
+      "ref": "label:2"
+    },
+    "input": {
+      "awards": [
+        "Award"
+      ],
+      "favorited_at": 1700000000,
+      "goodies": [
+        {
+          "name": "Booklet",
+          "original_url": "https://fixture.test/booklet.pdf"
+        },
+        {
+          "url": "file:///private"
+        }
+      ],
+      "id": 2,
+      "purchased_at": 1700000001,
+      "release_date_stream": "2025-01-02",
+      "updated_at": 1700000002
+    },
+    "kind": "label",
+    "parent": null
+  },
+  {
+    "case": "playlist-9",
+    "expected": {
+      "added_at": 1700000000,
+      "kind": "playlist",
+      "ref": "playlist:2",
+      "release_date": "2025-01-02",
+      "updated_at": 1700000002
+    },
+    "input": {
+      "awards": [
+        "Award"
+      ],
+      "favorited_at": 1700000000,
+      "goodies": [
+        {
+          "name": "Booklet",
+          "original_url": "https://fixture.test/booklet.pdf"
+        },
+        {
+          "url": "file:///private"
+        }
+      ],
+      "id": 2,
+      "purchased_at": 1700000001,
+      "release_date_stream": "2025-01-02",
+      "updated_at": 1700000002
+    },
+    "kind": "playlist",
+    "parent": null
+  }
+]

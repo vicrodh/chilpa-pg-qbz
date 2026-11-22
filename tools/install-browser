@@ -1,0 +1,36 @@
+#!/usr/bin/env python3
+"""Install this extracted companion for the current desktop user."""
+
+from pathlib import Path
+import os
+import shutil
+
+source = Path(__file__).resolve().parent
+if not (source / "qbz-browser").is_file():
+    raise SystemExit("Run install from the extracted QBZ Browser package.")
+destination = Path.home() / "Applications/qbz-browser"
+destination.parent.mkdir(parents=True, exist_ok=True)
+if source != destination:
+    shutil.copytree(source, destination, dirs_exist_ok=True)
+applications = (
+    Path(os.environ.get("XDG_DATA_HOME", str(Path.home() / ".local/share")))
+    / "applications"
+)
+applications.mkdir(parents=True, exist_ok=True)
+# Desktop Exec quoting is distinct from shell quoting.
+executable = (
+    str(destination / "qbz-browser")
+    .replace("\\", "\\\\")
+    .replace('"', '\\"')
+    .replace("`", "\\`")
+    .replace("$", "\\$")
+    .replace("%", "%%")
+)
+(applications / "io.github.vicrodh.qbz-browser.desktop").write_text(
+    '[Desktop Entry]\nType=Application\nName=QBZ Browser\nComment=Connect Firefox to the QBZ plugin\nExec="'
+    + executable
+    + '"\nIcon='
+    + str(destination / "icon.svg")
+    + "\nTerminal=false\nCategories=Audio;AudioVideo;\n"
+)
+print("QBZ Browser is available in the application menu.")

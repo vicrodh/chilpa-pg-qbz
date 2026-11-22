@@ -1,0 +1,40 @@
+The API client and wire models are derived from QBZ commit
+455441014b38e27b1d0c4054e04e6a66aa2753db (MIT, copyright 2024 blitzkriegfc).
+The MIT notices remain in crates/qobuz-api/LICENSE and
+crates/qobuz-models/LICENSE.
+
+The media implementation replaces the predecessor's parser, key interface,
+lease management and transfer orchestration. Its protocol layouts were
+studied from the predecessor; the retained MIT notice is in
+crates/media-core/LICENSE. This is a source reimplementation, not a claim
+of clean-room provenance.
+
+Credential discovery and browser authentication follow Strawberry commit
+aa2ba5109b1fbc9a1fe4de096644e5713b434f3b.
+Strawberry copyright 2019-2026 Jonas Kvinge <jonas@jkvinge.net>.
+
+The plugin is distributed under GPL-3.0-or-later; see COPYING. The local
+API, model and media crates retain their MIT license notices.
+
+The library index uses rusqlite and bundled SQLite. The rusqlite,
+libsqlite3-sys, iterator and hash-table notices are in LICENSE-INDEX.
+SQLite itself is in the public domain.
+
+Article text uses html-escape and utf8-width. Their MIT notices are included
+in LICENSE-INDEX.
+
+QBZ catalog and plugin contracts derive from the Chilpa Qobuz source plugin
+(GPL-3.0-or-later). The retired browser/OAuth source files are not used by QBZ.
+
+Firefox early injection and action bridge derive from matthewprince/zbq
+v0.1.1, commit 2d73f2c00983a3adb696220b09047b6468bd0072, MIT.
+The upstream notice is retained in browser/vendor/LICENSE.
+The companion capture, progressive PCM relay and setup wizard are QBZ code.
+
+The companion includes Python (PSF license), aiohttp (Apache-2.0/MIT),
+websockets (BSD-3-Clause), and PySide6/Qt (LGPL-3.0/GPL alternatives).
+Their distributed notices remain with the bundled libraries. FFmpeg and
+Firefox are selected external installations and are not bundled.
+
+The plugin icon is the original QBZ monochrome tray icon (tray-dark-64.png, 64 px), supplied from
+the QBZ project for this integration.

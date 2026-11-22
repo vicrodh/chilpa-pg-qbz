@@ -1,0 +1,896 @@
+{
+  "status": "local-pre-release",
+  "sdk_commit": "fe89b2f21a636ca6fdf86ff5cd02e0c87fc41fe7",
+  "reviewed_host_source_commit": "8f739a82044d1b966b61c8f6ed6fb97445b7b5dd",
+  "flatpak_test_commit": "529055cbc93d8e9d88e0b4f5080f256c378e8fc9262dbdaa05c8e1bb2b32df6d",
+  "zbq_commit": "2d73f2c00983a3adb696220b09047b6468bd0072",
+  "runtime": "process",
+  "api_version": 1,
+  "protocol": 1,
+  "tests": {
+    "python_companion": {
+      "passed": 39
+    },
+    "javascript_capture": "passed: byte preservation, buffer boundaries, session retention, concurrent metadata/media preparation",
+    "rust_library": {
+      "passed": 136,
+      "ignored": 2
+    },
+    "rust_process": {
+      "passed": 3
+    },
+    "catalog_startup_comparison": {
+      "samples": [
+        {
+          "parallel": false,
+          "resolve_seconds": 1.801,
+          "first_pcm_seconds": 1.893,
+          "sample_rate": 192000,
+          "bits": 24
+        },
+        {
+          "parallel": true,
+          "resolve_seconds": 0.95,
+          "first_pcm_seconds": 1.046,
+          "sample_rate": 192000,
+          "bits": 24
+        },
+        {
+          "parallel": true,
+          "resolve_seconds": 0.731,
+          "first_pcm_seconds": 0.821,
+          "sample_rate": 192000,
+          "bits": 24
+        },
+        {
+          "parallel": false,
+          "resolve_seconds": 1.312,
+          "first_pcm_seconds": 1.478,
+          "sample_rate": 192000,
+          "bits": 24
+        }
+      ],
+      "old_median_seconds": 1.6855,
+      "catalog_median_seconds": 0.9335,
+      "saved_seconds": 0.752,
+      "scenario": "Source helper with prepared Firefox; independent catalog HTTP client outside timed Play; time to first PCM, not physical DAC timing."
+    },
+    "intermediate_validation": {
+      "first_gapless": {
+        "passed": false,
+        "exit_code": 0,
+        "seconds": 69.14,
+        "package_sha256": "320cc3e26688c0c3c4281f1801e67c09fe141aefeb1b8ca346587dc0b5adc043",
+        "backend": "native",
+        "firefox": "native",
+        "gapless": true,
+        "catalog": false,
+        "gapless_valid": false,
+        "binary_sha256": "44b93af68d10b6c7d070c73aab1c11cb206e6c2b08a97e5076a72f9a7a9724ea",
+        "browser_warming": {
+          "warm_requests": 1,
+          "warm_ready": 1
+        },
+        "playback_metadata": {
+          "catalog_metadata": 2,
+          "browser_metadata": 0
+        }
+      },
+      "repeat_gapless": {
+        "passed": true,
+        "exit_code": 0,
+        "seconds": 75.86,
+        "package_sha256": "320cc3e26688c0c3c4281f1801e67c09fe141aefeb1b8ca346587dc0b5adc043",
+        "backend": "native",
+        "firefox": "native",
+        "gapless": true,
+        "catalog": false,
+        "gapless_valid": true,
+        "binary_sha256": "44b93af68d10b6c7d070c73aab1c11cb206e6c2b08a97e5076a72f9a7a9724ea",
+        "browser_warming": {
+          "warm_requests": 1,
+          "warm_ready": 1
+        },
+        "playback_metadata": {
+          "catalog_metadata": 2,
+          "browser_metadata": 0
+        }
+      },
+      "error": "First run ended the second track early with browser_page_operation. A source run and the repeated host run completed both tracks. Exact cause not established.",
+      "cleanup": "An old orphaned test Firefox was stopped before final runs; this is not proof of causality."
+    },
+    "native_gapless": {
+      "passed": true,
+      "exit_code": 0,
+      "seconds": 62.13,
+      "package_sha256": "80d256ea96bb32feaf6a52511c5852acb138790ec566fe7999c4f90669edd3ce",
+      "backend": "native",
+      "firefox": "native",
+      "gapless": true,
+      "catalog": false,
+      "gapless_valid": true,
+      "binary_sha256": "44b93af68d10b6c7d070c73aab1c11cb206e6c2b08a97e5076a72f9a7a9724ea",
+      "browser_warming": {
+        "warm_requests": 1,
+        "warm_ready": 1
+      },
+      "playback_metadata": {
+        "catalog_metadata": 2,
+        "browser_metadata": 0
+      }
+    },
+    "native_controls": {
+      "passed": true,
+      "exit_code": 0,
+      "seconds": 31.56,
+      "package_sha256": "80d256ea96bb32feaf6a52511c5852acb138790ec566fe7999c4f90669edd3ce",
+      "backend": "native",
+      "firefox": "native",
+      "gapless": false,
+      "catalog": false,
+      "gapless_valid": true,
+      "binary_sha256": "44b93af68d10b6c7d070c73aab1c11cb206e6c2b08a97e5076a72f9a7a9724ea",
+      "browser_warming": {
+        "warm_requests": 1,
+        "warm_ready": 1
+      },
+      "playback_metadata": {
+        "catalog_metadata": 2,
+        "browser_metadata": 0
+      }
+    },
+    "native_pcm": {
+      "equal": true,
+      "sha256": "af1761a632c11cbde3c2f0d089fe9e028f5a3809c29b10a1ea2c9217c02859a4",
+      "bytes": 1598873600,
+      "frames": 199859200
+    },
+    "flatpak_gapless": {
+      "passed": true,
+      "exit_code": 0,
+      "seconds": 70.42,
+      "package_sha256": "80d256ea96bb32feaf6a52511c5852acb138790ec566fe7999c4f90669edd3ce",
+      "backend": "flatpak",
+      "firefox": "flatpak",
+      "gapless": true,
+      "catalog": false,
+      "gapless_valid": true,
+      "binary_sha256": "44b93af68d10b6c7d070c73aab1c11cb206e6c2b08a97e5076a72f9a7a9724ea",
+      "browser_warming": {
+        "warm_requests": 1,
+        "warm_ready": 1
+      },
+      "playback_metadata": {
+        "catalog_metadata": 2,
+        "browser_metadata": 0
+      }
+    },
+    "flatpak_existing_controls": {
+      "passed": true,
+      "exit_code": 0,
+      "seconds": 26.35,
+      "package_sha256": "80d256ea96bb32feaf6a52511c5852acb138790ec566fe7999c4f90669edd3ce",
+      "backend": "flatpak",
+      "firefox": "flatpak",
+      "gapless": false,
+      "catalog": false,
+      "existing_session": true,
+      "gapless_valid": true,
+      "binary_sha256": "44b93af68d10b6c7d070c73aab1c11cb206e6c2b08a97e5076a72f9a7a9724ea",
+      "browser_warming": {
+        "warm_requests": 1,
+        "warm_ready": 1
+      },
+      "playback_metadata": {
+        "catalog_metadata": 2,
+        "browser_metadata": 0
+      }
+    },
+    "flatpak_pcm": {
+      "equal": true,
+      "sha256": "af1761a632c11cbde3c2f0d089fe9e028f5a3809c29b10a1ea2c9217c02859a4",
+      "bytes": 1598873600,
+      "frames": 199859200
+    },
+    "native_startup": {
+      "source_open_seconds": 1.082740931,
+      "metrics": {
+        "prepared": 2,
+        "bytes": 1199155288,
+        "range_requests": 291,
+        "browser_starts": 3,
+        "warm_requests": 1,
+        "warm_ready": 1,
+        "catalog_metadata": 2,
+        "browser_metadata": 0,
+        "startup": [
+          {
+            "preparation_slot": 0,
+            "browser": 0,
+            "local_player": 168,
+            "metadata_and_media": 846,
+            "first_pcm": 1077
+          },
+          {
+            "preparation_slot": 15635,
+            "browser": 15635,
+            "local_player": 15640,
+            "metadata_and_media": 16466,
+            "first_pcm": 16565
+          }
+        ],
+        "page_errors": []
+      },
+      "note": "Browser prepared for six seconds on album page. Source-open timing, not physical DAC timing."
+    },
+    "flatpak_after_login_startup": {
+      "source_open_seconds": 10.132115662,
+      "metrics": {
+        "prepared": 2,
+        "bytes": 1199155288,
+        "range_requests": 291,
+        "browser_starts": 3,
+        "warm_requests": 1,
+        "warm_ready": 1,
+        "catalog_metadata": 2,
+        "browser_metadata": 0,
+        "startup": [
+          {
+            "preparation_slot": 0,
+            "browser": 0,
+            "local_player": 162,
+            "metadata_and_media": 9795,
+            "first_pcm": 10120
+          },
+          {
+            "preparation_slot": 14952,
+            "browser": 14952,
+            "local_player": 14958,
+            "metadata_and_media": 15821,
+            "first_pcm": 15880
+          }
+        ],
+        "page_errors": []
+      },
+      "note": "Browser prepared for six seconds on album page. Source-open timing, not physical DAC timing."
+    },
+    "flatpak_existing_startup": {
+      "source_open_seconds": 0.828712857,
+      "metrics": {
+        "prepared": 0,
+        "bytes": 0,
+        "range_requests": 20,
+        "browser_starts": 1,
+        "warm_requests": 1,
+        "warm_ready": 1,
+        "catalog_metadata": 2,
+        "browser_metadata": 0,
+        "startup": [
+          {
+            "preparation_slot": 0,
+            "browser": 0,
+            "local_player": 8,
+            "metadata_and_media": 752,
+            "first_pcm": 823
+          },
+          {
+            "preparation_slot": 324,
+            "browser": 324,
+            "local_player": 1733,
+            "metadata_and_media": 2983,
+            "first_pcm": 3072
+          }
+        ],
+        "page_errors": []
+      },
+      "note": "Browser prepared for six seconds on album page. Source-open timing, not physical DAC timing."
+    },
+    "managed_shutdown": "All final host tests released their companion; the private test Firefox profile was removed."
+  },
+  "limitations": [
+    "Provider end reporting lacks browser receipt",
+    "DLNA gapless not guaranteed by current host",
+    "QConnect remote queue control not implemented",
+    "Cache limits reject very long tracks",
+    "Cross-distribution binary compatibility not established",
+    "Full visual integration switch matrix and edit operations were not revalidated live",
+    "Preparation depends on bandwidth and host prefetch timeouts",
+    "A fresh interactive account login was not repeated; managed auth tests explicitly used an existing authorized Firefox test profile.",
+    "Linux x86_64 only; macOS package unvalidated, Windows process backend unavailable, Snap unsupported.",
+    "Live collection-page rendering was not established by the offscreen harness; library and edit contracts retain fixture coverage.",
+    "An intermediate 0.1.4 run hit browser_page_operation mid-track; final native/Flatpak checks passed. Cause not established. A post-login Flatpak start also needed about ten seconds; normal authenticated startup was 0.83 seconds in the measured run."
+  ],
+  "missing_sdk_documents": [
+    "docs/visual-integration.md",
+    "docs/refresh-and-lifecycle.md",
+    "docs/player-control-proposal.md"
+  ],
+  "flatpak_test_binary_sha256": "44b93af68d10b6c7d070c73aab1c11cb206e6c2b08a97e5076a72f9a7a9724ea",
+  "skill_sha256": "3520c33b45e2f0fb40d17082fb39c23fd37ede1bf0567642d06eba9092a58717",
+  "firefox_native_test_version": "160.0.1",
+  "previous_manual_pairing_validation": {
+    "plugin_zip_sha256": "8ed71d779602a89778b740781c6b62e09027c564dd48689a59ef241b51389f4b",
+    "native_test_binary_sha256": "97567736523077be04a17a6986d1b1359841868d86711e3f2bc0dd55da1c3b44",
+    "flatpak_test_binary_sha256": "efa54a050d892355f201c5f56fe7e71b8cd9ce20c7eae23993dc8229e7f31662",
+    "companion_archive_sha256": "776e251c03a0b50ef6dbe83a52064c8d3f2489ffee4e4ca833c1d8e2cb8cf04c",
+    "tests": {
+      "rust_library": {
+        "passed": 130,
+        "ignored": 2
+      },
+      "python_companion": {
+        "passed": 8
+      },
+      "native_exact_zip": "passed with installed packaged companion and empty cache: install, permissions, pairing, 24/192, pause, seek, genuine next track, stop",
+      "flatpak_exact_zip": "passed: same ZIP and packaged external companion; two complete 24/192 tracks with empty cache",
+      "local_gapless": "passed with an empty companion cache: two complete 24/192 tracks, same sink across boundary, exact frames; native warm-cache and Flatpak cold-cache",
+      "browser_pcm": "two complete 24/192 tracks matched source FLAC MD5",
+      "firefox_flatpak": "launch and bridge injection passed; signed-in playback not tested",
+      "macos": "discovery adapter only; package/runtime untested",
+      "windows": "discovery adapter only; Chilpa process runtime unsupported",
+      "new_companion_profile_login": "requires interactive sign-in; backend tests used an existing authorized test profile",
+      "javascript_capture": "batched transfer preserves every byte and bounds responses to 1 MiB",
+      "pcm_comparison": {
+        "frames": 199859200,
+        "sha256": "b1fc41706e158247b64dbfe3c670fd43e4741fc26419a5d9754567cd9e4e01c9",
+        "equal": true
+      },
+      "dlna": "live Mac mini receiver: WAV accepted, advanced for 20 seconds, stopped; receiver DSP/bit-perfect status unknown",
+      "permissions": "denied network: zero companion requests, resolution rejected, settings remain available",
+      "wizard": "packaged window opens; read-only paths with file pickers; Flatpak permission command copy verified"
+    }
+  },
+  "host_extension": "Requires local desktop_companion, path/copy form controls and visible settings refresh changes; not available in the previously tested released hosts.",
+  "host_worktree_changes": true,
+  "plugin_zip_sha256": "bb910d437b0b4bc725b7c1eb02d69e51c7edb01d80559a0f6bbbdb6dc29531e6",
+  "native_test_binary_sha256": "44b93af68d10b6c7d070c73aab1c11cb206e6c2b08a97e5076a72f9a7a9724ea",
+  "memory": {
+    "clean_main_peak_mib": [
+      229.671875
+    ],
+    "budget_mib": 250,
+    "scenario": "clean-main-offscreen-software",
+    "helper_idle": "0.1.4 retains the 45-second Firefox idle shutdown; adds at most 512 small metadata records. Ten-minute idle footprint not remeasured."
+  },
+  "firefox_flatpak_test_version": "160.0.1",
+  "companion_archive_sha256": "0786f6d5a3fdb02ad670f5d9dbfbd638d7859dd6276cd181cf23238043e161fa",
+  "intermediate_managed_validation": {
+    "plugin_zip_sha256": "d7ecbefcd890cc1bf5a6417de3fed39047cfee6a8db6c417413b0a9255163973",
+    "tests": {
+      "python_companion": {
+        "passed": 18
+      },
+      "managed_handshake": "passed: packaged helper detected Firefox without launching it; EOF clean shutdown",
+      "managed_login": "passed: existing authorized session with native Firefox and Firefox Flatpak; no manual pairing code",
+      "native_exact_zip": "passed: actual settings form, detection, login, automatic return, credential check and disable; native Firefox",
+      "flatpak_exact_zip": "passed: same ZIP, actual settings form, detection, login, automatic return, credential check and disable; Firefox Flatpak",
+      "qml": {
+        "passed": 29,
+        "suites": 6
+      },
+      "rust_library": {
+        "passed": 130,
+        "ignored": 2
+      },
+      "host_plugin": {
+        "passed": 87
+      },
+      "host_bwrap": {
+        "passed": 45,
+        "ignored": 3
+      },
+      "javascript_capture": "passed: exact bytes and bounded transfer",
+      "host_check": "chilpa-api passed",
+      "host_lint": "tools/lint/fast passed",
+      "flatpak_denied": "passed with the exact ZIP: copyable permission command, no helper launched",
+      "local_gapless": "passed: exact ZIP, empty cache, two full 24/192 tracks and one sink; native/native Firefox and Flatpak/Flatpak Firefox",
+      "pcm_comparison": {
+        "tracks": [
+          {
+            "frames": 97994240,
+            "md5": "a5f1158f2f9f943a5c5415e0fa596cf6",
+            "expected": "a5f1158f2f9f943a5c5415e0fa596cf6",
+            "equal": true
+          },
+          {
+            "frames": 101864960,
+            "md5": "31922dcfedd57e1a93acf2be1f3e99e4",
+            "expected": "31922dcfedd57e1a93acf2be1f3e99e4",
+            "equal": true
+          }
+        ],
+        "packed_pcm_sha256": "b1fc41706e158247b64dbfe3c670fd43e4741fc26419a5d9754567cd9e4e01c9",
+        "frames": 199859200,
+        "native_and_flatpak_raw_sha256": "af1761a632c11cbde3c2f0d089fe9e028f5a3809c29b10a1ea2c9217c02859a4"
+      },
+      "firefox_flatpak": "passed: auth, complete 24/192 playback and scoped owned-instance shutdown"
+    },
+    "note": "Before bounded retry for a web player accepting Play without initial media. Complete gapless passed, later controls exposed the empty-start case."
+  },
+  "previous_versions": {
+    "0.1.0-managed": {
+      "plugin_zip_sha256": "2be4abd9e1b9f5f36edc0770aa7c724a46f6b1fefacd570496f98a28d1314562",
+      "native_test_binary_sha256": "557cd045a9107b8f69a93041a031971b8a2181d1ee767d3ee4dc0010eaaad090",
+      "flatpak_test_binary_sha256": "557cd045a9107b8f69a93041a031971b8a2181d1ee767d3ee4dc0010eaaad090",
+      "tests": {
+        "managed_handshake": "passed: packaged helper detected Firefox without launching it; EOF clean shutdown",
+        "qml": {
+          "passed": 29,
+          "suites": 6
+        },
+        "rust_library": {
+          "passed": 130,
+          "ignored": 2
+        },
+        "host_plugin": {
+          "passed": 87
+        },
+        "host_bwrap": {
+          "passed": 45,
+          "ignored": 3
+        },
+        "javascript_capture": "passed: exact bytes and bounded transfer",
+        "host_check": "chilpa-api passed",
+        "host_lint": "tools/lint/fast passed",
+        "python_companion": {
+          "passed": 20
+        },
+        "native_controls": "passed with exact ZIP: first track at 24/192, pause holds position, seek to 45 s, real next track and stop; no tracks skipped",
+        "flatpak_controls": "passed with exact ZIP and Firefox Flatpak: first track at 24/192, pause, seek to 45 s, real next track and stop; no tracks skipped",
+        "native_gapless": "passed: empty cache, two complete 24/192 tracks, one sink, exact frames",
+        "pcm_comparison": {
+          "tracks": [
+            {
+              "frames": 97994240,
+              "md5": "a5f1158f2f9f943a5c5415e0fa596cf6",
+              "expected": "a5f1158f2f9f943a5c5415e0fa596cf6",
+              "equal": true
+            },
+            {
+              "frames": 101864960,
+              "md5": "31922dcfedd57e1a93acf2be1f3e99e4",
+              "expected": "31922dcfedd57e1a93acf2be1f3e99e4",
+              "equal": true
+            }
+          ],
+          "packed_pcm_sha256": "b1fc41706e158247b64dbfe3c670fd43e4741fc26419a5d9754567cd9e4e01c9",
+          "frames": 199859200,
+          "raw_sha256": "af1761a632c11cbde3c2f0d089fe9e028f5a3809c29b10a1ea2c9217c02859a4",
+          "comparison": "Final native and Flatpak outputs byte-identical to the intermediate output whose packed samples matched both source FLAC MD5 checksums."
+        },
+        "flatpak_gapless": "passed: same exact ZIP and Firefox Flatpak, empty cache, two complete 24/192 tracks, one sink, exact frames",
+        "native_exact_zip": "passed: actual form, Firefox detection, login, automatic return, credential check, disable",
+        "flatpak_exact_zip": "passed: actual form, Firefox Flatpak detection, login, automatic return, credential check and disable",
+        "flatpak_denied": "passed: actual permission-denied form and copyable command with exact ZIP",
+        "new_profile_login": "not repeated: tests explicitly used an existing authorized isolated Firefox profile",
+        "managed_shutdown": "passed: helper connection removed after every final smoke; no owned Firefox remains"
+      },
+      "memory": {
+        "clean_main_peak_mib": [
+          231.484375,
+          231.7265625,
+          232.05078125
+        ],
+        "budget_mib": 250,
+        "baseline_peak_mib": [
+          240.52734375,
+          240.5234375,
+          240.67578125
+        ],
+        "baseline_note": "Existing earlier release, exact source provenance unavailable; equivalent clean Main scenario, not an isolated change benchmark.",
+        "helper_idle": {
+          "cycles": 3,
+          "minutes_per_cycle": 10,
+          "peak_mib": [
+            42.88671875,
+            42.1875,
+            42.1640625
+          ],
+          "cpu_seconds": [
+            0,
+            0,
+            0
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0
+          ],
+          "note": "Measured the packaged helper before the final Flatpak instance shutdown and cold-player readiness fixes; these paths are inactive during this idle scenario."
+        }
+      }
+    },
+    "0.1.1": {
+      "version": "0.1.1",
+      "plugin_zip_sha256": "339c5b6b88de7b717a0c2ef46c08f5147ef6b0440b76c43fbea123c9753696dd",
+      "companion_archive_sha256": "be60057aec39ceeda4a1dc73c157ebafd0271127af4c44aeea133171e749f63f",
+      "tests": {
+        "python_companion": {
+          "passed": 25
+        },
+        "javascript_capture": "passed: exact bytes, inactive MSE buffer/end-of-stream rejection, queue-version commit after buffer creation, browser session retention",
+        "rust_library": {
+          "passed": 134,
+          "ignored": 2
+        },
+        "rust_process": {
+          "passed": 3
+        },
+        "rust_projection": {
+          "passed": 7
+        },
+        "host_account_refresh": {
+          "passed": 4
+        },
+        "regression_before_fix": "Confirmed browser session stayed unusable until a second manual check: 1 failed, 129 passed, 2 ignored before the fix.",
+        "retained_session": "passed: transient sign-in retained in Firefox, cold restart authenticated, initial 24/192 FLAC delivered with default autoplay preferences",
+        "pcm_comparison": {
+          "raw_sha256": "af1761a632c11cbde3c2f0d089fe9e028f5a3809c29b10a1ea2c9217c02859a4",
+          "native_equal": true,
+          "frames": 199859200,
+          "reference": "Byte-identical to the earlier output checked against both source FLAC MD5 checksums.",
+          "flatpak_equal": true
+        },
+        "flatpak_gapless": {
+          "passed": true,
+          "exit_code": 0,
+          "seconds": 60.36,
+          "package_sha256": "a679db69aaac9dc2ef88dc33037a4448483445519a230d3ad998f81adf41b961",
+          "backend": "flatpak",
+          "firefox": "flatpak",
+          "gapless": true,
+          "catalog": false,
+          "gapless_valid": true,
+          "binary_sha256": "44b93af68d10b6c7d070c73aab1c11cb206e6c2b08a97e5076a72f9a7a9724ea"
+        },
+        "native_gapless": {
+          "passed": true,
+          "exit_code": 0,
+          "seconds": 66.36,
+          "package_sha256": "a679db69aaac9dc2ef88dc33037a4448483445519a230d3ad998f81adf41b961",
+          "backend": "native",
+          "firefox": "native",
+          "gapless": true,
+          "catalog": false,
+          "gapless_valid": true,
+          "binary_sha256": "44b93af68d10b6c7d070c73aab1c11cb206e6c2b08a97e5076a72f9a7a9724ea"
+        },
+        "flatpak_controls": {
+          "passed": true,
+          "exit_code": 0,
+          "seconds": 33.81,
+          "package_sha256": "a679db69aaac9dc2ef88dc33037a4448483445519a230d3ad998f81adf41b961",
+          "backend": "flatpak",
+          "firefox": "flatpak",
+          "gapless": false,
+          "catalog": false,
+          "gapless_valid": true,
+          "binary_sha256": "44b93af68d10b6c7d070c73aab1c11cb206e6c2b08a97e5076a72f9a7a9724ea"
+        },
+        "native_exact_zip": {
+          "passed": true,
+          "backend": "native",
+          "denied": false,
+          "exit": 0,
+          "seconds": 18.06,
+          "package_sha256": "a679db69aaac9dc2ef88dc33037a4448483445519a230d3ad998f81adf41b961",
+          "binary_sha256": "44b93af68d10b6c7d070c73aab1c11cb206e6c2b08a97e5076a72f9a7a9724ea"
+        },
+        "flatpak_exact_zip": {
+          "passed": true,
+          "backend": "flatpak",
+          "denied": false,
+          "exit": 0,
+          "seconds": 16.96,
+          "package_sha256": "a679db69aaac9dc2ef88dc33037a4448483445519a230d3ad998f81adf41b961",
+          "binary_sha256": "44b93af68d10b6c7d070c73aab1c11cb206e6c2b08a97e5076a72f9a7a9724ea"
+        },
+        "flatpak_denied": {
+          "passed": true,
+          "backend": "flatpak",
+          "denied": true,
+          "exit": 0,
+          "seconds": 4.48,
+          "package_sha256": "a679db69aaac9dc2ef88dc33037a4448483445519a230d3ad998f81adf41b961",
+          "binary_sha256": "44b93af68d10b6c7d070c73aab1c11cb206e6c2b08a97e5076a72f9a7a9724ea"
+        },
+        "managed_shutdown": "passed: connection removed after each completed host smoke; helper disabled by its host",
+        "live_collections": "not validated: the offscreen navigation harness did not complete collection rendering; this is not recorded as a pass",
+        "catalog_search_playback": {
+          "passed": true,
+          "exit_code": 0,
+          "seconds": 41.93,
+          "package_sha256": "a679db69aaac9dc2ef88dc33037a4448483445519a230d3ad998f81adf41b961",
+          "backend": "native",
+          "firefox": "native",
+          "gapless": false,
+          "catalog": true,
+          "gapless_valid": true,
+          "binary_sha256": "44b93af68d10b6c7d070c73aab1c11cb206e6c2b08a97e5076a72f9a7a9724ea"
+        }
+      },
+      "asset_only_revision": {
+        "base_audio_validated_zip_sha256": "a679db69aaac9dc2ef88dc33037a4448483445519a230d3ad998f81adf41b961",
+        "changed_entries": [
+          "NOTICE",
+          "browser/NOTICE",
+          "browser/_internal/icon.png",
+          "browser/icon.png",
+          "icon.png"
+        ],
+        "icon_source": "QBZ tray-dark-64.png",
+        "icon_sha256": "1a3cd0c237f3ff7478ed5d783298dcd3985727abfd485eb2816a6d1cdd1e9418",
+        "note": "Only original icon assets and their attribution changed. All other ZIP entries, including executables, are byte-identical. Playback checks refer to the base ZIP."
+      }
+    },
+    "0.1.2": {
+      "version": "0.1.2",
+      "plugin_zip_sha256": "3023ed952f1965546c3cb7bb5af5a2ae699aa512f22dc394ce076592767fc76e",
+      "companion_archive_sha256": "00449e8b2663c626ba52f5d2bd3e92a08feba5a35be6849800bec537bdddd168",
+      "tests": {
+        "python_companion": {
+          "passed": 29
+        },
+        "fresh_storage_regression": {
+          "before_fix": false,
+          "after_fix": true,
+          "scenario": "New Firefox profile, new localStorage entry, immediate close and cold restart"
+        },
+        "rust_process": {
+          "passed": 3
+        },
+        "javascript_capture": "passed: byte preservation, inactive capture boundaries and browser session retention",
+        "fresh_profile_session": {
+          "native": true,
+          "flatpak": true,
+          "cold_restart": true,
+          "sample_rate": 192000,
+          "bits": 24,
+          "method": "Existing authorized test session transferred in memory into a brand-new browser profile; immediate close and reopen. Interactive password entry not repeated."
+        },
+        "graceful_firefox_exit": {
+          "exit_code": 0,
+          "seconds": 0.59
+        },
+        "native_controls": {
+          "passed": true,
+          "exit_code": 0,
+          "seconds": 35.06,
+          "package_sha256": "3023ed952f1965546c3cb7bb5af5a2ae699aa512f22dc394ce076592767fc76e",
+          "backend": "native",
+          "firefox": "native",
+          "gapless": false,
+          "catalog": false,
+          "gapless_valid": true,
+          "binary_sha256": "44b93af68d10b6c7d070c73aab1c11cb206e6c2b08a97e5076a72f9a7a9724ea"
+        },
+        "native_exact_zip": {
+          "passed": true,
+          "backend": "native",
+          "denied": false,
+          "exit": 0,
+          "seconds": 15.76,
+          "package_sha256": "3023ed952f1965546c3cb7bb5af5a2ae699aa512f22dc394ce076592767fc76e",
+          "binary_sha256": "44b93af68d10b6c7d070c73aab1c11cb206e6c2b08a97e5076a72f9a7a9724ea"
+        },
+        "flatpak_exact_zip": {
+          "passed": true,
+          "backend": "flatpak",
+          "denied": false,
+          "exit": 0,
+          "seconds": 19.41,
+          "package_sha256": "3023ed952f1965546c3cb7bb5af5a2ae699aa512f22dc394ce076592767fc76e",
+          "binary_sha256": "44b93af68d10b6c7d070c73aab1c11cb206e6c2b08a97e5076a72f9a7a9724ea"
+        },
+        "monochrome_icon": {
+          "native": {
+            "transparent_center": true,
+            "transparent_background": true,
+            "alpha_range": [
+              0,
+              255
+            ]
+          },
+          "flatpak": {
+            "transparent_center": true,
+            "transparent_background": true,
+            "alpha_range": [
+              0,
+              255
+            ]
+          }
+        },
+        "flatpak_gapless": {
+          "passed": true,
+          "exit_code": 0,
+          "seconds": 57.66,
+          "package_sha256": "3023ed952f1965546c3cb7bb5af5a2ae699aa512f22dc394ce076592767fc76e",
+          "backend": "flatpak",
+          "firefox": "flatpak",
+          "gapless": true,
+          "catalog": false,
+          "gapless_valid": true,
+          "binary_sha256": "44b93af68d10b6c7d070c73aab1c11cb206e6c2b08a97e5076a72f9a7a9724ea"
+        },
+        "pcm_comparison": {
+          "raw_sha256": "af1761a632c11cbde3c2f0d089fe9e028f5a3809c29b10a1ea2c9217c02859a4",
+          "bytes": 1598873600,
+          "frames": 199859200,
+          "equal": true,
+          "reference": "Byte-identical to the prior output checked against both source FLAC MD5 checksums."
+        },
+        "managed_shutdown": "All final host smokes removed their companion connection on disable."
+      }
+    },
+    "0.1.3": {
+      "version": "0.1.3",
+      "plugin_zip_sha256": "9313b7cbc776292bd8de9f7d9e20b8d4e123da38906919cbbbfffc5f3eb4a9cc",
+      "companion_archive_sha256": "56a5e52538f83bfad7639835000b58d5f2f93addeea8418c9d8a78f27693eec6",
+      "tests": {
+        "python_companion": {
+          "passed": 33
+        },
+        "javascript_capture": "passed: original bytes and stream boundaries unchanged",
+        "rust_library": {
+          "passed": 134,
+          "ignored": 2
+        },
+        "rust_process": {
+          "passed": 3
+        },
+        "native_gapless": {
+          "passed": true,
+          "exit_code": 0,
+          "seconds": 64.46,
+          "package_sha256": "9313b7cbc776292bd8de9f7d9e20b8d4e123da38906919cbbbfffc5f3eb4a9cc",
+          "backend": "native",
+          "firefox": "native",
+          "gapless": true,
+          "catalog": false,
+          "gapless_valid": true,
+          "binary_sha256": "44b93af68d10b6c7d070c73aab1c11cb206e6c2b08a97e5076a72f9a7a9724ea",
+          "browser_warming": {
+            "warm_requests": 1,
+            "warm_ready": 1
+          }
+        },
+        "native_pcm": {
+          "equal": true,
+          "sha256": "af1761a632c11cbde3c2f0d089fe9e028f5a3809c29b10a1ea2c9217c02859a4",
+          "bytes": 1598873600,
+          "frames": 199859200
+        },
+        "native_startup": {
+          "browse_seconds": 6,
+          "source_open_seconds": 1.415453165,
+          "scenario": "Exact ZIP, browser prepared while album is open; time from Play to source open, not physical DAC timing."
+        },
+        "flatpak_gapless": {
+          "passed": true,
+          "exit_code": 0,
+          "seconds": 67.02,
+          "package_sha256": "9313b7cbc776292bd8de9f7d9e20b8d4e123da38906919cbbbfffc5f3eb4a9cc",
+          "backend": "flatpak",
+          "firefox": "flatpak",
+          "gapless": true,
+          "catalog": false,
+          "gapless_valid": true,
+          "binary_sha256": "44b93af68d10b6c7d070c73aab1c11cb206e6c2b08a97e5076a72f9a7a9724ea",
+          "browser_warming": {
+            "warm_requests": 1,
+            "warm_ready": 1
+          }
+        },
+        "flatpak_pcm": {
+          "equal": true,
+          "sha256": "af1761a632c11cbde3c2f0d089fe9e028f5a3809c29b10a1ea2c9217c02859a4",
+          "bytes": 1598873600,
+          "frames": 199859200
+        },
+        "flatpak_startup": {
+          "browse_seconds": 6,
+          "source_open_seconds": 2.293072754,
+          "scenario": "Exact ZIP, browser prepared while album is open; time from Play to source open, not physical DAC timing."
+        },
+        "startup_samples": [
+          {
+            "state": "cold",
+            "warm_seconds": 0.0,
+            "resolve_seconds": 5.806,
+            "first_pcm_seconds": 5.888,
+            "sample_rate": 192000,
+            "bits": 24
+          },
+          {
+            "state": "warm",
+            "warm_seconds": 4.765,
+            "resolve_seconds": 1.827,
+            "first_pcm_seconds": 1.922,
+            "sample_rate": 192000,
+            "bits": 24
+          },
+          {
+            "state": "warm",
+            "warm_seconds": 4.365,
+            "resolve_seconds": 10.747,
+            "first_pcm_seconds": 10.942,
+            "sample_rate": 192000,
+            "bits": 24
+          },
+          {
+            "state": "cold",
+            "warm_seconds": 0.0,
+            "resolve_seconds": 5.903,
+            "first_pcm_seconds": 6.024,
+            "sample_rate": 192000,
+            "bits": 24
+          },
+          {
+            "state": "warm",
+            "warm_seconds": 4.612,
+            "resolve_seconds": 1.958,
+            "first_pcm_seconds": 2.191,
+            "sample_rate": 192000,
+            "bits": 24
+          },
+          {
+            "state": "warm",
+            "warm_seconds": 5.278,
+            "resolve_seconds": 2.004,
+            "first_pcm_seconds": 2.113,
+            "sample_rate": 192000,
+            "bits": 24
+          }
+        ],
+        "startup_navigation_candidate": "Discarded: interactive document navigation did not improve real Qobuz startup consistently.",
+        "native_controls": {
+          "passed": true,
+          "exit_code": 0,
+          "seconds": 35.16,
+          "package_sha256": "9313b7cbc776292bd8de9f7d9e20b8d4e123da38906919cbbbfffc5f3eb4a9cc",
+          "backend": "native",
+          "firefox": "native",
+          "gapless": false,
+          "catalog": false,
+          "gapless_valid": true,
+          "binary_sha256": "44b93af68d10b6c7d070c73aab1c11cb206e6c2b08a97e5076a72f9a7a9724ea",
+          "browser_warming": {
+            "warm_requests": 1,
+            "warm_ready": 1
+          }
+        },
+        "managed_shutdown": "Final native and Flatpak host smokes removed their helper connection; the private test browser profile has no remaining owner."
+      }
+    }
+  },
+  "package_name": "pg-qbz",
+  "source_name": "Qobuz",
+  "version": "0.1.4",
+  "validation_pending": false,
+  "manifest_only_revision": {
+    "original_tested_zip_sha256": "80d256ea96bb32feaf6a52511c5852acb138790ec566fe7999c4f90669edd3ce",
+    "revised_zip_sha256": "bb910d437b0b4bc725b7c1eb02d69e51c7edb01d80559a0f6bbbdb6dc29531e6",
+    "changed_entries": [
+      "manifest.json"
+    ],
+    "changed_manifest_fields": [
+      "description",
+      "name"
+    ],
+    "binaries_and_assets_byte_identical": true,
+    "validation": "All archive entry contents except manifest.json are byte-identical to the tested package. Prior audio and host test results retain the original tested ZIP hash; audio tests were not rerun for this listing-only revision."
+  },
+  "macos_validation": {
+    "architecture": "aarch64",
+    "package_sha256": "f405c11125b1ab14b396ba55e0fdf782ecf7e52806aabdd502a8037d1966205e",
+    "plugin_binary_sha256": "e58666876ad29b2971c4b8ed2dcd70a1b0222315771dc53da9a339d80990190a",
+    "companion_archive_sha256": "d7a57d97ffc2c74dcc849ccf73a9c7529fdd2f05da72cd79865349d7ab86d0e3",
+    "python_tests": {
+      "passed": 39
+    },
+    "rpc_smoke": "passed: isolated empty profile, event negotiation and missing-helper guidance",
+    "exact_zip_helper": "passed: handshake, Firefox and FFmpeg detection, login state without an account, EOF shutdown and connection cleanup",
+    "live_login_and_playback": "pending owner validation",
+    "host_integration": "pending"
+  }
+}

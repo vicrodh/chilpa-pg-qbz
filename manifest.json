@@ -1,0 +1,39 @@
+{
+  "id": "io.github.vicrodh.qbz",
+  "name": "QBZ (Qobuz client)",
+  "version": "0.1.4",
+  "api_version": 1,
+  "kind": "source",
+  "runtime": "process",
+  "description": "Requires Firefox and a dedicated Firefox instance running in the background. Qobuz's web player handles stream decryption inside Firefox; neither Chilpa nor this plugin decrypts streams. Playback uses Chilpa's audio engine. Firefox closes after 45 seconds of inactivity.",
+  "icon": "icon.png",
+  "capabilities": [
+    {
+      "type": "network",
+      "domains": [
+        "www.qobuz.com",
+        "qobuz-qobuz-prod.web.arc-cdn.net",
+        "play.qobuz.com",
+        "streaming-qobuz-std.akamaized.net",
+        "static.qobuz.com",
+        "d12eggcejhfkay.cloudfront.net",
+        "127.0.0.1"
+      ]
+    },
+    {
+      "type": "register_source"
+    },
+    {
+      "type": "register_panel"
+    },
+    {
+      "type": "own_account",
+      "keyring": false
+    },
+    {
+      "type": "desktop_companion",
+      "entry": "browser/qbz-browser"
+    }
+  ],
+  "author": "vicrodh"
+}

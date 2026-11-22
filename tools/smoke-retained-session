@@ -1,0 +1,66 @@
+#!/usr/bin/env python3
+"""Check session retention and cold playback using an explicitly selected test profile."""
+import argparse
+import asyncio
+import json
+from pathlib import Path
+import re
+import shutil
+import sys
+import tempfile
+
+root = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(root / "browser"))
+from driver import Browser
+
+parser = argparse.ArgumentParser(description=__doc__)
+parser.add_argument("--profile", type=Path, required=True, help="Authorized Firefox test profile; copied privately and never modified")
+parser.add_argument("--firefox", required=True)
+parser.add_argument("--mode", choices=["native", "flatpak"], default="native")
+parser.add_argument("--track", default="47683510")
+arguments = parser.parse_args()
+
+async def check():
+    with tempfile.TemporaryDirectory(prefix="pg-qbz-session-") as directory:
+        profile = Path(directory) / "firefox"
+        shutil.copytree(arguments.profile, profile, ignore=shutil.ignore_patterns(
+            "lock", ".parentlock", "parent.lock", "cache2", "startupCache", "thumbnails"))
+        # Use default autoplay preferences, independent of the original test setup.
+        (profile / "user.js").unlink(missing_ok=True)
+        preferences = profile / "prefs.js"
+        preferences.write_text("\n".join(line for line in preferences.read_text().splitlines()
+            if not re.match(r'user_pref\("media\.autoplay\.', line)))
+        browser = Browser(profile, arguments.firefox, headless=True, mode=arguments.mode)
+        try:
+            await browser.start(None)
+            await browser.account()
+            await browser.remember_session()
+            remembered = await browser.evaluate('localStorage.getItem("localuser")')
+        finally:
+            await browser.close()
+        # An existing on-disk value can mask a premature shutdown. Exercise a
+        # genuinely new profile with no previous stored account to fall back to.
+        profile = Path(directory) / "fresh-firefox"
+        browser = Browser(profile, arguments.firefox, headless=True, mode=arguments.mode)
+        try:
+            await browser.start(None)
+            if await browser.evaluate('!!localStorage.getItem("localuser")'):
+                raise RuntimeError("The fresh test profile already contained an account")
+            await browser.evaluate('localStorage.setItem("localuser",' + json.dumps(remembered) + ')')
+            remembered = None
+        finally:
+            await browser.close()
+        browser = Browser(profile, arguments.firefox, headless=True, mode=arguments.mode)
+        try:
+            await browser.start(None)
+            await browser.account()
+            await browser.local()
+            media = await browser.start_capture(arguments.track, 27)
+            if not media.get("data") or not media.get("format") or media.get("error"):
+                raise RuntimeError("The retained browser session delivered no lossless media")
+            print(json.dumps({"passed": True, "cold_restart": True, "fresh_profile": True, "local_output": True,
+                "sample_rate": media["format"]["sample_rate"], "bits": media["format"]["bits"]}))
+        finally:
+            await browser.close()
+
+asyncio.run(check())

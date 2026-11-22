@@ -1,0 +1,15 @@
+[package]
+name = "media-core"
+version = "1.0.0"
+edition = "2021"
+license = "MIT"
+publish = false
+[dependencies]
+aes = "0.8"
+cbc = "0.1"
+ctr = "0.9"
+hkdf = "0.12"
+sha2 = "0.10"
+base64 = "0.23"
+thiserror = "2"
+zeroize = { version = "1", features = ["derive"] }

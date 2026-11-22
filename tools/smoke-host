@@ -1,0 +1,219 @@
+#!/usr/bin/env python3
+"""Install the exact ZIP through the host, exercise playback in a private profile."""
+
+import argparse
+import hashlib
+import json
+import os
+from pathlib import Path
+import subprocess
+import time
+import urllib.request
+
+root = Path(__file__).resolve().parents[1]
+parser = argparse.ArgumentParser(description=__doc__)
+parser.add_argument("--profile", type=Path, required=True)
+parser.add_argument("--output", type=Path, required=True)
+parser.add_argument(
+    "--binary", type=Path, default=Path("/mnt/build/cargo/default/release/chilpa-qt")
+)
+parser.add_argument("--backend", choices=["native", "flatpak"], default="native")
+parser.add_argument("--gapless", action="store_true")
+parser.add_argument("--catalog", action="store_true")
+parser.add_argument("--firefox-flatpak", action="store_true")
+parser.add_argument("--device", default="file:capture")
+parser.add_argument("--cast-name", default="")
+parser.add_argument("--hold-seconds", type=int, default=2)
+parser.add_argument("--browse-seconds", type=int, default=0)
+parser.add_argument("--require-catalog-metadata", action="store_true")
+parser.add_argument("--existing-session", action="store_true")
+parser.add_argument("--hw-params", type=Path)
+parser.add_argument("--listen-only", action="store_true")
+options = parser.parse_args()
+out = options.output.resolve()
+out.mkdir(parents=True, exist_ok=False)
+out.chmod(0o700)
+for folder in ["config/chilpa", "data", "cache", "runtime", "tmp"]:
+    (out / folder).mkdir(parents=True, exist_ok=True)
+(out / "runtime").chmod(0o700)
+(out / "config/chilpa/settings.conf").write_text(
+    "output = "
+    + options.device
+    + "\nlanguage = en\naudio.exclusive = true\nplayback.volume = 100\n"
+)
+package = out / "package.zip"
+package.write_bytes((root / ("dist/" + json.loads((root / "manifest.json").read_text())["version"] + "-linux-x86_64.zip")).read_bytes())
+private = out / "data/chilpa/plugin-desktop/io.github.vicrodh.qbz"
+private.mkdir(mode=0o700, parents=True)
+(private / "firefox").symlink_to(options.profile.resolve(), target_is_directory=True)
+if options.firefox_flatpak or options.existing_session:
+    launcher = {"mode":"flatpak","path":""} if options.firefox_flatpak else {}
+    if options.existing_session:
+        launcher["verified"] = True
+    (private / "launcher.json").write_text(json.dumps(launcher))
+qml = (
+    (root / ("tests/catalog-flow.qml" if options.catalog else "tests/host.qml"))
+    .read_text()
+    .replace("PACKAGE", json.dumps(package.as_uri()))
+    .replace("SCREENSHOT", json.dumps(str(out / "catalog.png")))
+    .replace("GAPLESS", "true" if options.gapless else "false")
+    .replace("CAST_TARGET", json.dumps(options.cast_name))
+)
+qml = qml.replace("HOLD_SECONDS", str(options.hold_seconds))
+qml = qml.replace("BROWSE_SECONDS", str(options.browse_seconds))
+qml = qml.replace("EXISTING_SESSION", "true" if options.existing_session else "false")
+seek = 45
+qml = qml.replace("SEEK_SECONDS", str(seek)).replace(
+    "LISTEN_ONLY", "true" if options.listen_only else "false"
+)
+fixture = out / "fixture.qml"
+fixture.write_text(qml)
+fixture.chmod(0o600)
+env = {
+    k: v for k, v in os.environ.items() if not k.startswith(("CHILPA_", "QT_", "QSG_"))
+}
+env.update(
+    XDG_CONFIG_HOME=str(out / "config"),
+    XDG_DATA_HOME=str(out / "data"),
+    XDG_CACHE_HOME=str(out / "cache"),
+    XDG_RUNTIME_DIR=str(out / "runtime"),
+    TMPDIR=str(out / "tmp"),
+    QT_QPA_PLATFORM="offscreen",
+    QT_QUICK_BACKEND="software",
+    CHILPA_RENDERER="software",
+    CHILPA_QML_SMOKE=str(fixture),
+    CHILPA_CAPTURE_REALTIME="1",
+    CHILPA_DEV="1",
+)
+if options.gapless:
+    env.pop("CHILPA_CAPTURE_REALTIME", None)
+if options.backend == "flatpak":
+    staged = out / "package.zip"
+    staged.write_bytes(package.read_bytes())
+    overrides = {
+        k: v
+        for k, v in env.items()
+        if k.startswith(
+            (
+                "CHILPA_",
+                "QT_",
+                "QSG_",
+                "XDG_CONFIG_HOME",
+                "XDG_DATA_HOME",
+                "XDG_CACHE_HOME",
+                "TMPDIR",
+            )
+        )
+    }
+    overrides["CHILPA_SECOND_INSTANCE"] = "1"
+    command = (
+        [
+            "flatpak",
+            "run",
+            "--filesystem=" + str(out),
+            "--filesystem=" + str(options.binary.parent) + ":ro",
+            "--talk-name=org.freedesktop.Flatpak",
+            "--command=env",
+            "app.chilpa.Chilpa//stable",
+        ]
+        + [k + "=" + v for k, v in overrides.items()]
+        + [str(options.binary)]
+    )
+    env = {
+        k: v
+        for k, v in os.environ.items()
+        if not k.startswith(("CHILPA_", "QT_", "QSG_"))
+    }
+else:
+    command = ["dbus-run-session", "--", str(options.binary)]
+started = time.monotonic()
+if options.gapless:
+    env.pop("CHILPA_CAPTURE_REALTIME", None)
+hardware = []
+failure_snapshot = False
+with (out / "host.log").open("w") as log:
+    result = subprocess.Popen(command, env=env, stdout=log, stderr=subprocess.STDOUT)
+    try:
+        while result.poll() is None:
+            if not failure_snapshot:
+                playback_log = (out / "host.log").read_text()
+                if "outcome=Unreadable" in playback_log or "queue.source_passed_over" in playback_log:
+                    failure_snapshot = True
+                    try:
+                        connection = json.loads((private / "connection.json").read_text())
+                        request = urllib.request.Request("http://127.0.0.1:" + str(int(connection["port"])) + "/setup",
+                            data=b'{}', headers={"Authorization": "Bearer " + connection["key"], "Content-Type": "application/json"})
+                        with urllib.request.urlopen(request, timeout=2) as response:
+                            status = json.loads(response.read(65536))
+                        safe = {key: status.get(key, "") for key in ("phase", "problem", "playback_error", "playback_error_code")}
+                        (out / "helper-failure.json").write_text(json.dumps(safe, indent=2) + "\n")
+                    except (OSError, ValueError, KeyError):
+                        pass
+            if time.monotonic() - started > 180:
+                raise TimeoutError("Host smoke exceeded 180 seconds")
+            if options.hw_params:
+                value = options.hw_params.read_text()
+                if not hardware or hardware[-1]["parameters"] != value:
+                    hardware.append(
+                        {
+                            "seconds": round(time.monotonic() - started, 2),
+                            "parameters": value,
+                        }
+                    )
+                    (out / "hardware.json").write_text(
+                        json.dumps(hardware, indent=2) + "\n"
+                    )
+            time.sleep(0.25)
+    finally:
+        if result.poll() is None:
+            result.terminate()
+            try:
+                result.wait(timeout=8)
+            except subprocess.TimeoutExpired:
+                result.kill()
+                result.wait()
+deadline = time.monotonic() + 15
+while (private / "connection.json").exists() and time.monotonic() < deadline:
+    time.sleep(0.1)
+if (private / "connection.json").exists():
+    raise RuntimeError("The host left its companion running")
+text = (out / "host.log").read_text()
+if options.gapless:
+    expected = ["Finished { frames: 97994240 }", "Finished { frames: 101864960 }"]
+    gapless_valid = (
+        all(item in text for item in expected)
+        and "keep_open=true sink_open=true" in text
+    )
+else:
+    gapless_valid = True
+report = {
+    "passed": (result.returncode == 0 and "PROOF PASS" in text and gapless_valid
+               and "queue.source_passed_over" not in text and "PROOF FAIL" not in text),
+    "exit_code": result.returncode,
+    "seconds": round(time.monotonic() - started, 2),
+    "package_sha256": hashlib.sha256(package.read_bytes()).hexdigest(),
+    "backend": options.backend,
+    "firefox": "flatpak" if options.firefox_flatpak else "native",
+    "gapless": options.gapless,
+    "catalog": options.catalog,
+    "existing_session": options.existing_session,
+    "gapless_valid": gapless_valid,
+    "binary_sha256": hashlib.sha256(options.binary.read_bytes()).hexdigest(),
+}
+if options.browse_seconds:
+    metrics = json.loads((private / "metrics.json").read_text())
+    report["browser_warming"] = {key: metrics[key] for key in ("warm_requests", "warm_ready")}
+    report["passed"] = report["passed"] and metrics["warm_requests"] > 0 and metrics["warm_ready"] > 0
+if options.require_catalog_metadata:
+    metrics = json.loads((private / "metrics.json").read_text())
+    report["playback_metadata"] = {key: metrics[key] for key in ("catalog_metadata", "browser_metadata")}
+    report["passed"] = report["passed"] and metrics["catalog_metadata"] > 0
+(out / "report.json").write_text(json.dumps(report, indent=2) + "\n")
+if hardware:
+    (out / "hardware.json").write_text(json.dumps(hardware, indent=2) + "\n")
+fixture.unlink()
+print(json.dumps(report))
+for line in text.splitlines():
+    if "PROOF" in line:
+        print(line)
+raise SystemExit(0 if report["passed"] else 1)

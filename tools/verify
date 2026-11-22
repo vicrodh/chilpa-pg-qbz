@@ -1,0 +1,39 @@
+#!/usr/bin/env python3
+"""Run source checks; optionally exercise the host's QML components."""
+import argparse
+import ast
+import os
+from pathlib import Path
+import shutil
+import subprocess
+import sys
+import tempfile
+
+parser = argparse.ArgumentParser(description=__doc__)
+parser.add_argument("--host", type=Path)
+parser.add_argument("--host-module")
+parser.add_argument("--host-patterns")
+options = parser.parse_args()
+root = Path(__file__).resolve().parents[1]
+subprocess.run(["cargo", "fmt", "--all", "--check"], cwd=root, check=True)
+command = ["cargo", "test", "--workspace", "--locked"]
+lock = Path(os.environ.get("PLUGIN_BUILD_LOCK", str(Path(tempfile.gettempdir()) / "plugin-cargo.lock")))
+capped = Path.home() / ".local/bin/cargo-capped"
+if lock.parent.is_dir() and capped.is_file() and shutil.which("flock"):
+    command = ["flock", str(lock), str(capped), *command]
+subprocess.run(command, cwd=root, check=True)
+subprocess.run([sys.executable, str(root / "tools/check-boundaries")], cwd=root, check=True)
+for source in (root / "tools").iterdir():
+    if source.is_file() and source.read_text().startswith("#!/usr/bin/env python3"):
+        ast.parse(source.read_text(), filename=str(source))
+if options.host:
+    if not options.host_module or not options.host_patterns:
+        parser.error("host UI checks require --host-module and --host-patterns")
+    for script in ("test-playlists-ui",):
+        command = [sys.executable, str(root / "tools" / script), str(options.host.resolve()), "--patterns-url", options.host_patterns]
+        if script == "test-playlists-ui":
+            command += ["--host-module", options.host_module]
+        subprocess.run(command, check=True)
+
+subprocess.run([sys.executable, "-m", "unittest", "discover", "-s", "browser/tests"], cwd=root, check=True)
+subprocess.run(["node", "browser/tests/capture.cjs"], cwd=root, check=True)
