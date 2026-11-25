@@ -5,7 +5,7 @@ and a host-managed Firefox companion for sign-in and audio preparation. It has i
 own identity, `io.github.vicrodh.qbz`, and does not replace another Qobuz plugin.
 The package is named `pg-qbz`; the sidebar and search advertise it as Qobuz.
 
-Version 0.1.4 is a preview for the upcoming Chilpa 0.1.3 with managed desktop
+Version 0.1.5 is a preview for the upcoming Chilpa 0.1.3 with managed desktop
 companion support. Chilpa 0.1.2 and earlier cannot load this plugin. Download the
 package for your platform from [Releases](https://github.com/vicrodh/chilpa-pg-qbz/releases).
 The published Linux build requires glibc 2.42 or later; the Apple Silicon build
@@ -29,8 +29,8 @@ audio is exposed to Chilpa. Complete PCM is also checked against the FLAC checks
 
 ## Setup
 
-1. Install `pg-qbz-0.1.4-linux-x86_64.zip` on Linux or
-   `pg-qbz-0.1.4-macos-aarch64.zip` on Apple Silicon, in a Chilpa build with the
+1. Install `pg-qbz-0.1.5-linux-x86_64.zip` on Linux or
+   `pg-qbz-0.1.5-macos-aarch64.zip` on Apple Silicon, in a Chilpa build with the
    desktop companion contract. Approve the displayed permissions, including the desktop helper.
 2. Open Qobuz settings. Chilpa starts the bundled helper and detects Firefox. If
    Firefox is missing, choose its installation using the native file picker.

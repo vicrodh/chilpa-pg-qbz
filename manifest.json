@@ -1,7 +1,7 @@
 {
   "id": "io.github.vicrodh.qbz",
   "name": "QBZ (Qobuz client)",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "api_version": 1,
   "kind": "source",
   "runtime": "process",
