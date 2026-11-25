@@ -866,7 +866,7 @@
   "package_name": "pg-qbz",
   "source_name": "Qobuz",
   "version": "0.1.5",
-  "validation_pending": true,
+  "validation_pending": false,
   "manifest_only_revision": {
     "original_tested_zip_sha256": "80d256ea96bb32feaf6a52511c5852acb138790ec566fe7999c4f90669edd3ce",
     "revised_zip_sha256": "bb910d437b0b4bc725b7c1eb02d69e51c7edb01d80559a0f6bbbdb6dc29531e6",
@@ -950,12 +950,23 @@
     "checks": [
       "Handshake with a 4-second Firefox Flatpak probe: 4.91 s before, 0.40 s with the packaged helper; detection finishes after the handshake.",
       "Ubuntu 26.04.1 VM, Firefox Snap 160.0.1 through the helper driver, headless: the profile under ~/.local/share fails to open; the profile in ~/snap/firefox/common starts in 12.6 s. Firefox deb control starts with either profile.",
-      "Ubuntu 26.04.1 VM, packaged helper: handshake 0.41 s; selecting /snap/bin/firefox reports snap true."
+      "Ubuntu 26.04.1 VM, packaged helper: handshake 0.41 s; selecting /snap/bin/firefox reports snap true.",
+      "Owner smoke, Ubuntu 26.04.1 VM: Chilpa 0.1.3 release .deb (e380fc6c1d8e2ba27d5e3da6ec97da9412fe7f47056709589c6c9a38617deec8) with the exact Linux ZIP; Firefox Snap sign-in verified, library and playback worked through the PulseAudio-protocol output.",
+      "Rust process and projection tests: 3 and 7 passed."
     ],
     "pending": [
-      "Chilpa sign-in and playback with Firefox Snap.",
-      "Library synchronization against an account whose collection repeats rows.",
-      "macOS package not built."
-    ]
+      "Library synchronization against a live account whose collection repeats rows (fixtures only).",
+      "macOS sign-in and playback with 0.1.5.",
+      "The Linux plugin binary keeps 29 Rust standard library source paths under the build machine's toolchain folder; no home paths."
+    ],
+    "macos": {
+      "plugin_zip_sha256": "56771bf06339e158fd721efc6bc3b3a454ecd63a4a2402ef55a86fbe9b41e4ea",
+      "plugin_binary_sha256": "0bb60dd0e376db610e1ce8dc3c763d05d7dfa501380069f2010b07c6ad28f74c",
+      "companion_archive_sha256": "dae9835374f340dd608e09bca00bae7d1c8af198ded94338d100199b2ef2a132",
+      "python_tests": {
+        "passed": 48
+      },
+      "exact_zip_helper": "macOS 26.6.2: first start of the new bundle answered in 8.01 s, of which 0.21 s ran inside the helper; detection followed the handshake."
+    }
   }
 }
