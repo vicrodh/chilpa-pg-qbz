@@ -47,6 +47,14 @@ subprocess.run(
         "numpy",
         "--exclude-module",
         "matplotlib",
+        # Terminal modules are never imported by the helper, and they are the
+        # only bundled files that need a newer C library than the rest.
+        "--exclude-module",
+        "termios",
+        "--exclude-module",
+        "readline",
+        "--exclude-module",
+        "curses",
         str(root / "browser/companion.py"),
     ],
     check=True,
