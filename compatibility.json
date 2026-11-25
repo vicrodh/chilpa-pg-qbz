@@ -890,7 +890,7 @@
     },
     "rpc_smoke": "passed: isolated empty profile, event negotiation and missing-helper guidance",
     "exact_zip_helper": "passed: handshake, Firefox and FFmpeg detection, login state without an account, EOF shutdown and connection cleanup",
-    "live_login_and_playback": "Sign-in reached ready in an isolated profile on the previous host build (779a1256), followed by disable and connection cleanup. Real playback remains pending owner validation on macOS.",
+    "live_login_and_playback": "Sign-in and playback on macOS passed with 0.1.4.",
     "host_integration": {
       "passed": true,
       "exit": 0,
@@ -956,7 +956,7 @@
     ],
     "pending": [
       "Library synchronization against a live account whose collection repeats rows (fixtures only).",
-      "macOS sign-in and playback with 0.1.5.",
+      "macOS sign-in and playback were not repeated with the 0.1.5 package; they passed with 0.1.4.",
       "The Linux plugin binary keeps 29 Rust standard library source paths under the build machine's toolchain folder; no home paths."
     ],
     "macos": {
