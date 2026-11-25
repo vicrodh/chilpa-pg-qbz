@@ -166,8 +166,12 @@ impl LibraryPage {
     if items.len() > limit as usize {
       return Err(invalid("service exceeded the requested item limit"));
     }
+    // The service repeats an item within a page in some accounts: the first
+    // copy is kept, and the offset still advances by every row it sent.
+    let received = items.len() as u64;
     let mut identities = HashSet::with_capacity(items.len());
-    for item in &items {
+    let mut unique = Vec::with_capacity(items.len());
+    for item in items {
       let id = match item.get("id") {
         Some(Value::String(text)) if !text.is_empty() && text.len() <= 256 => text.clone(),
         Some(Value::Number(number)) if number.as_u64().is_some_and(|id| id != 0) => {
@@ -175,28 +179,18 @@ impl LibraryPage {
         }
         _ => return Err(invalid("item has no valid identity")),
       };
-      if !identities.insert(id) {
-        return Err(invalid("collection repeated an item in the same page"));
+      if identities.insert(id) {
+        unique.push(item);
       }
     }
-    let consumed =
-      offset.checked_add(items.len() as u64).ok_or_else(|| invalid("offset overflow"))?;
-    let more = if let Some(total) = total {
-      if !items.is_empty() && consumed > total {
-        return Err(invalid("items exceed the reported total"));
-      }
-      let more = consumed < total;
-      if has_more.is_some_and(|flag| flag != more) {
-        return Err(invalid("continuation flag contradicts the total"));
-      }
-      more
-    } else {
-      has_more.unwrap_or(!items.is_empty())
-    };
-    if more && items.is_empty() {
-      return Err(invalid("empty page before the collection ends"));
-    }
-    Ok(Self { items, next_offset: more.then_some(consumed), total })
+    let consumed = offset.checked_add(received).ok_or_else(|| invalid("offset overflow"))?;
+    // Any signal that the collection ended ends it. A reported total may
+    // count rows the service never sends, and an empty page means nothing
+    // follows it.
+    let more = received > 0
+      && total.is_none_or(|total| consumed < total)
+      && has_more.unwrap_or(true);
+    Ok(Self { items: unique, next_offset: more.then_some(consumed), total })
   }
 }
 
@@ -362,7 +356,7 @@ mod tests {
   }
 
   #[test]
-  fn empty_collections_are_distinct_from_errors_and_stalled_pages() {
+  fn empty_collections_are_distinct_from_errors() {
     let empty =
       LibraryPage::parse(json!({"albums":{"items":[],"total":0}}), "albums", 100, 0).unwrap();
     assert!(empty.items.is_empty());
@@ -370,16 +364,45 @@ mod tests {
     for body in [
       json!({"status":"error","albums":{"items":[],"total":0}}),
       json!({"albums":{}}),
-      json!({"albums":{"items":[],"total":9}}),
       json!({"albums":{"items":[{"id":"a"}],"offset":0}}),
-      json!({"albums":{"items":[{"id":"a"},{"id":"a"}]}}),
+      json!({"albums":{"items":[{"id":""}]}}),
     ] {
       assert!(LibraryPage::parse(body, "albums", 100, 1).is_err());
     }
   }
 
   #[test]
-  fn unknown_totals_require_an_explicit_end_or_an_empty_page() {
+  fn a_repeated_item_in_a_page_is_kept_once_and_the_offset_counts_every_row() {
+    let page = LibraryPage::parse(
+      json!({"albums":{"items":[{"id":"a"},{"id":"b"},{"id":"a"}],"offset":4,"total":20}}),
+      "albums",
+      100,
+      4,
+    )
+    .unwrap();
+    let ids: Vec<_> = page.items.iter().map(|item| item["id"].clone()).collect();
+    assert_eq!(ids, [json!("a"), json!("b")]);
+    assert_eq!(page.next_offset, Some(7), "three rows were sent");
+  }
+
+  #[test]
+  fn any_end_signal_ends_the_collection_even_against_the_total() {
+    for (body, offset) in [
+      // An empty page short of the total: the total counted rows never sent.
+      (json!({"albums":{"items":[],"total":9}}), 4),
+      // More rows than the total.
+      (json!({"albums":{"items":[{"id":"a"},{"id":"b"}],"total":1}}), 0),
+      // The flag says the end before the total does.
+      (json!({"albums":{"items":[{"id":"a"}],"total":9,"has_more":false}}), 0),
+      (json!({"albums":{"items":[],"has_more":true}}), 2),
+    ] {
+      let page = LibraryPage::parse(body.clone(), "albums", 100, offset).unwrap();
+      assert_eq!(page.next_offset, None, "{body}");
+    }
+  }
+
+  #[test]
+  fn unknown_totals_continue_until_an_explicit_end_or_an_empty_page() {
     let page =
       LibraryPage::parse(json!({"tracks":{"items":[{"id":4}]}}), "tracks", 100, 0).unwrap();
     assert_eq!(page.next_offset, Some(1));
@@ -387,9 +410,6 @@ mod tests {
       LibraryPage::parse(json!({"tracks":{"items":[{"id":5}],"has_more":false}}), "tracks", 100, 1)
         .unwrap();
     assert_eq!(last.next_offset, None);
-    assert!(
-      LibraryPage::parse(json!({"tracks":{"items":[],"has_more":true}}), "tracks", 100, 2).is_err()
-    );
     assert!(
       LibraryPage::parse(json!({"tracks":{"items":[{"id":1},{"id":2}]}}), "tracks", 1, 0).is_err()
     );

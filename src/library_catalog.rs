@@ -244,7 +244,6 @@ struct Sync {
   source: usize,
   offset: u64,
   loaded: u64,
-  source_unique: u64,
   source_total: Option<u64>,
   page_size: u32,
   changed: [bool; 8],
@@ -319,6 +318,18 @@ pub(crate) struct LibraryCatalog {
 
 pub(crate) struct LibraryMutation {
   _guard: OwnedRwLockWriteGuard<()>,
+}
+
+/// Names the collection and offset a synchronization failure came from, so a
+/// report says where the service answered something unexpected.
+fn located(source: LibrarySource, offset: u64, error: qobuz_api::ApiError) -> qobuz_api::ApiError {
+  match error {
+    qobuz_api::ApiError::ApiResponse(message) => qobuz_api::ApiError::ApiResponse(format!(
+      "{message} ({} at offset {offset})",
+      source.name()
+    )),
+    other => other,
+  }
 }
 
 fn membership(source: LibrarySource) -> Membership {
@@ -675,7 +686,6 @@ impl LibraryCatalog {
         source: 0,
         offset: 0,
         loaded: 0,
-        source_unique: 0,
         source_total: None,
         page_size: SYNC_PAGE,
         changed,
@@ -762,19 +772,17 @@ impl LibraryCatalog {
           return Err(Self::defer(progress, error))
         }
         Ok(Err(error)) => {
+          let error = located(source, work.offset, error);
           return Err(Self::discard(account, progress, None, error));
         }
         Err(_) => return Err(Self::defer(progress, qobuz_api::ApiError::ServerError(504))),
       };
       if page.total.is_some_and(|total| work.source_total.is_some_and(|before| before != total)) {
-        return Err(Self::discard(
-          account,
-          progress,
-          None,
-          qobuz_api::ApiError::ApiResponse(
-            "The library collection total changed during synchronization".into(),
-          ),
-        ));
+        let error = qobuz_api::ApiError::ApiResponse(
+          "The library collection total changed during synchronization".into(),
+        );
+        let error = located(source, work.offset, error);
+        return Err(Self::discard(account, progress, None, error));
       }
       let rows: Vec<_> = page
         .items
@@ -784,36 +792,22 @@ impl LibraryCatalog {
       let stats = match account.index.ingest(work.generation, membership(source), &rows) {
         Ok(stats) => stats,
         Err(error) => {
-          return Err(Self::discard(
-            account,
-            progress,
-            None,
-            qobuz_api::ApiError::ApiResponse(error),
-          ));
+          let error = located(source, work.offset, qobuz_api::ApiError::ApiResponse(error));
+          return Err(Self::discard(account, progress, None, error));
         }
       };
-      work.source_unique += stats.new_memberships;
       work.source_total = page.total.or(work.source_total);
-      if stats.new_memberships != page.items.len() as u64
-        || (page.next_offset.is_none()
-          && work.source_total.is_some_and(|total| total != work.source_unique))
-      {
-        return Err(Self::discard(
-          account,
-          progress,
-          None,
-          qobuz_api::ApiError::ApiResponse(
-            "The library collection changed or did not advance; retry synchronization".into(),
-          ),
-        ));
-      }
-      work.loaded += page.items.len() as u64;
-      match page.next_offset {
+      work.loaded += stats.new_memberships;
+      // An item an earlier page already brought is skipped, not fatal: the
+      // service repeats rows across pages in some accounts, and the count
+      // need not match its total. A page that brings nothing new ends the
+      // collection, so a service that ignores the offset cannot loop.
+      let stalled = !page.items.is_empty() && stats.new_memberships == 0;
+      match page.next_offset.filter(|_| !stalled) {
         Some(offset) => work.offset = offset,
         None => {
           work.source += 1;
           work.offset = 0;
-          work.source_unique = 0;
           work.source_total = None;
           work.page_size = SYNC_PAGE;
         }

@@ -419,7 +419,6 @@ async fn a_snapshot_copy_resumes_from_its_cursor_before_fetching_changed_sources
     source: 0,
     offset: 0,
     loaded: 0,
-    source_unique: 0,
     source_total: None,
     page_size: SYNC_PAGE,
     changed: std::array::from_fn(|position| position == 2),
@@ -439,9 +438,8 @@ async fn a_snapshot_copy_resumes_from_its_cursor_before_fetching_changed_sources
   assert!(!progress.dirty);
 }
 
-#[tokio::test]
-async fn partially_repeated_pages_and_changing_totals_do_not_publish() {
-  let page = |ids: &[&str], next_offset, total| SourcePage {
+fn albums(ids: &[&str], next_offset: Option<u64>, total: Option<u64>) -> SourcePage {
+  SourcePage {
     items: ids
       .iter()
       .map(|id| SourceRow {
@@ -452,10 +450,16 @@ async fn partially_repeated_pages_and_changing_totals_do_not_publish() {
       .collect(),
     next_offset,
     total,
-  };
-  for pages in [
-    vec![page(&["a", "b"], Some(2), None), page(&["b", "c"], None, None)],
-    vec![page(&["a"], Some(1), Some(3)), page(&["b"], None, Some(2))],
+  }
+}
+
+#[tokio::test]
+async fn repeated_rows_and_a_count_short_of_the_total_still_publish() {
+  for (pages, unique) in [
+    // A row an earlier page already brought.
+    (vec![albums(&["a", "b"], Some(2), None), albums(&["b", "c"], None, None)], 3),
+    // The total counts a row the service never sends.
+    (vec![albums(&["a"], Some(1), Some(3)), albums(&["b"], None, Some(3))], 2),
   ] {
     let directory = tempfile::tempdir().unwrap();
     let account = account(directory.path());
@@ -465,10 +469,44 @@ async fn partially_repeated_pages_and_changing_totals_do_not_publish() {
     for page in pages {
       remote.enqueue(Ok(page));
     }
-    assert!(catalog.advance(&remote, &account, &mut progress, false).await.is_err());
-    assert!(progress.work.is_none());
-    assert_eq!(account.index.status().unwrap().generation, 0);
+    finish(&catalog, &remote, &account, &mut progress).await;
+    assert_eq!(account.index.status().unwrap().items, unique);
+    assert!(progress.last_error.is_none());
   }
+}
+
+#[tokio::test]
+async fn a_page_that_brings_nothing_new_ends_its_collection() {
+  let directory = tempfile::tempdir().unwrap();
+  let account = account(directory.path());
+  let remote = RemoteFixture::new();
+  let catalog = LibraryCatalog::default();
+  let mut progress = Progress::default();
+  // A service that ignores the offset answers the same page forever.
+  remote.enqueue(Ok(albums(&["a"], Some(1), None)));
+  remote.enqueue(Ok(albums(&["a"], Some(2), None)));
+  remote.enqueue(Ok(albums(&["a"], Some(3), None)));
+  finish(&catalog, &remote, &account, &mut progress).await;
+  let calls = remote.calls.lock().unwrap();
+  let albums: Vec<_> =
+    calls.iter().filter(|(source, _)| *source == LibrarySource::FavoriteAlbums).collect();
+  assert_eq!(albums, [&(LibrarySource::FavoriteAlbums, 0), &(LibrarySource::FavoriteAlbums, 1)]);
+  assert_eq!(account.index.status().unwrap().items, 1);
+}
+
+#[tokio::test]
+async fn a_changing_total_does_not_publish_and_says_where() {
+  let directory = tempfile::tempdir().unwrap();
+  let account = account(directory.path());
+  let remote = RemoteFixture::new();
+  let catalog = LibraryCatalog::default();
+  let mut progress = Progress::default();
+  remote.enqueue(Ok(albums(&["a"], Some(1), Some(3))));
+  remote.enqueue(Ok(albums(&["b"], None, Some(2))));
+  let error = catalog.advance(&remote, &account, &mut progress, false).await.unwrap_err();
+  assert!(error.message.contains("(favorite-albums at offset 1)"), "{}", error.message);
+  assert!(progress.work.is_none());
+  assert_eq!(account.index.status().unwrap().generation, 0);
 }
 
 #[tokio::test]
@@ -508,7 +546,6 @@ async fn failed_publication_can_retry_after_the_last_source_without_panicking() 
       source: 8,
       offset: 0,
       loaded: 0,
-      source_unique: 0,
       source_total: None,
       page_size: 500,
       changed: [true; 8],
