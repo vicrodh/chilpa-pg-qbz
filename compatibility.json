@@ -9,11 +9,11 @@
   "protocol": 1,
   "tests": {
     "python_companion": {
-      "passed": 39
+      "passed": 48
     },
     "javascript_capture": "passed: byte preservation, buffer boundaries, session retention, concurrent metadata/media preparation",
     "rust_library": {
-      "passed": 136,
+      "passed": 142,
       "ignored": 2
     },
     "rust_process": {
@@ -865,8 +865,8 @@
   },
   "package_name": "pg-qbz",
   "source_name": "Qobuz",
-  "version": "0.1.4",
-  "validation_pending": false,
+  "version": "0.1.5",
+  "validation_pending": true,
   "manifest_only_revision": {
     "original_tested_zip_sha256": "80d256ea96bb32feaf6a52511c5852acb138790ec566fe7999c4f90669edd3ce",
     "revised_zip_sha256": "bb910d437b0b4bc725b7c1eb02d69e51c7edb01d80559a0f6bbbdb6dc29531e6",
@@ -941,5 +941,21 @@
       "passed": true,
       "note": "The following host commit changes only the macOS helper startup deadline; the Linux deadline remains eight seconds."
     }
+  },
+  "release_0_1_5": {
+    "plugin_zip_sha256": "0c817271854616e02d5e9606771dee516b87fff7610ef7aecafae034290c2cd0",
+    "plugin_binary_sha256": "b570b59f4e9f547a190cc363a90235a4fb028e67bbc207e4dd5c75df35fb7693",
+    "companion_archive_sha256": "14ac7e378393d7a8f67d5852877591fde99c4b45e9dff225050c2246aa6e50c1",
+    "linux_glibc_floor": "2.38 for the plugin and the helper bundle; termios and its terminal library, the only files needing 2.42, are no longer bundled",
+    "checks": [
+      "Handshake with a 4-second Firefox Flatpak probe: 4.91 s before, 0.40 s with the packaged helper; detection finishes after the handshake.",
+      "Ubuntu 26.04.1 VM, Firefox Snap 160.0.1 through the helper driver, headless: the profile under ~/.local/share fails to open; the profile in ~/snap/firefox/common starts in 12.6 s. Firefox deb control starts with either profile.",
+      "Ubuntu 26.04.1 VM, packaged helper: handshake 0.41 s; selecting /snap/bin/firefox reports snap true."
+    ],
+    "pending": [
+      "Chilpa sign-in and playback with Firefox Snap.",
+      "Library synchronization against an account whose collection repeats rows.",
+      "macOS package not built."
+    ]
   }
 }
