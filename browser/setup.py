@@ -5,7 +5,7 @@ import os
 from pathlib import Path
 import sys
 from urllib.parse import unquote, urlsplit
-from launch import candidates, flatpak_available, normalize
+from launch import candidates, flatpak_available, normalize, snap_firefox
 
 
 class Setup:
@@ -16,9 +16,32 @@ class Setup:
         self.problem = ""
         self.task = None
         self.found = []
+        self.initial = None
+
+    def begin(self, trace=None):
+        """Detects Firefox after the host has the handshake: detection can
+        wait seconds on a cold system, and the host gives startup a deadline."""
+        self.initial = asyncio.create_task(self.first_detection(trace))
+
+    async def first_detection(self, trace):
+        try:
+            snapshot = await self.detect()
+            if trace:
+                trace.note("detected", phase=snapshot["phase"], found=len(self.found),
+                           mode=snapshot["mode"], snap=snapshot["snap"],
+                           decoder=not snapshot["missing_decoder"])
+        except Exception as error:
+            self.phase = "detect"
+            self.problem = "Firefox detection failed. Choose Firefox and detect again."
+            if trace:
+                trace.failure(error)
+
+    async def settled(self):
+        if self.initial:
+            await asyncio.shield(self.initial)
 
     async def detect(self):
-        self.found = [{"mode": "native", "path": p} for p in candidates()]
+        self.found = [{"mode": "native", "path": p, "snap": snap_firefox(p)} for p in candidates()]
         try:
             if await asyncio.to_thread(flatpak_available):
                 self.found.append({"mode": "flatpak", "path": ""})
@@ -74,6 +97,7 @@ class Setup:
         return {"phase": self.phase, "problem": self.problem, "playback_error": getattr(self.companion, "last_error", ""),
                 "playback_error_code": getattr(self.companion, "last_error_code", ""), "found": self.found,
                 "mode": self.companion.args.mode, "path": self.companion.args.firefox,
+                "snap": self.companion.args.mode == "native" and snap_firefox(self.companion.args.firefox),
                 "directory": sys.platform == "darwin", "missing_decoder": not bool(getattr(self.companion.args, "ffmpeg", None))}
 
     async def action(self, body):

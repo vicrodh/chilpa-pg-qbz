@@ -73,13 +73,23 @@ impl AccessController {
     self.state.lock().await.notice = None;
     Ok(())
   }
+  /// The helper the host started, taken on first use: the settings form can
+  /// open before the startup load has run.
+  async fn connection(&self) -> Result<Option<BrowserConnection>, String> {
+    let mut state = self.state.lock().await;
+    if state.connection.is_none() {
+      let value = self.managed.get().cloned().unwrap_or(Value::Null);
+      if value["protocol"] == 1 {
+        let connection: BrowserConnection =
+          serde_json::from_value(value).map_err(|_| "Invalid desktop connection")?;
+        connection.validate()?;
+        state.connection = Some(connection);
+      }
+    }
+    Ok(state.connection.clone())
+  }
   pub async fn load(&self, api: &QobuzClient) -> Result<(), String> {
-    let value = self.managed.get().cloned().unwrap_or(Value::Null);
-    if value["protocol"] == 1 {
-      let connection: BrowserConnection =
-        serde_json::from_value(value).map_err(|_| "Invalid desktop connection")?;
-      connection.validate()?;
-      self.state.lock().await.connection = Some(connection.clone());
+    if let Some(connection) = self.connection().await? {
       let setup = self.request(&connection, "setup", json!({})).await?;
       if matches!(setup["phase"].as_str(), Some("verify" | "ready")) {
         if let Err(error) = self.complete_session(api, &connection, &setup).await {

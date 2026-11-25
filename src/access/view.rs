@@ -5,12 +5,17 @@ impl AccessController {
   pub async fn form(&self, api: &QobuzClient, language: &str) -> Value {
     let spanish = language.starts_with("es");
     let text = |en: &str, es: &str| if spanish { es.to_string() } else { en.to_string() };
-    let connection = self.state.lock().await.connection.clone();
-    let mut setup = match &connection {
-      Some(c) => {
-        self.request(c, "setup", json!({})).await.unwrap_or_else(|_| json!({"phase":"unavailable"}))
+    let (connection, mut setup) = match self.connection().await {
+      Ok(Some(c)) => {
+        let setup = match self.request(&c, "setup", json!({})).await {
+          Ok(setup) => setup,
+          // The helper started and stopped answering: its reason goes to the notices.
+          Err(error) => json!({"phase":"unavailable","unreachable":true,"problem":error}),
+        };
+        (Some(c), setup)
       }
-      None => json!({"phase":"unavailable"}),
+      Ok(None) => (None, json!({"phase":"unavailable"})),
+      Err(error) => (None, json!({"phase":"unavailable","unreachable":true,"problem":error})),
     };
     if matches!(setup["phase"].as_str(), Some("verify" | "ready")) {
       if let Some(connection) = &connection {
@@ -72,7 +77,11 @@ impl AccessController {
           json!([]),
         ));
         actions.push(action("change", "Choose another Firefox", "Elegir otro Firefox", json!([])));
-        text("Firefox detected. Sign in in the window that opens; Chilpa will confirm the session automatically.","Firefox detectado. Inicia sesión en la ventana que se abrirá; Chilpa confirmará la sesión automáticamente.")
+        if setup["snap"] == true {
+          text("Firefox Snap detected. Its Qobuz profile is kept in ~/snap/firefox/common, where Snap lets Firefox open it. Sign in in the window that opens; Chilpa will confirm the session automatically.","Se detectó Firefox Snap. Su perfil de Qobuz se guarda en ~/snap/firefox/common, donde Snap deja que Firefox lo abra. Inicia sesión en la ventana que se abrirá; Chilpa confirmará la sesión automáticamente.")
+        } else {
+          text("Firefox detected. Sign in in the window that opens; Chilpa will confirm the session automatically.","Firefox detectado. Inicia sesión en la ventana que se abrirá; Chilpa confirmará la sesión automáticamente.")
+        }
       }
       "waiting" => {
         actions.push(action("cancel", "Cancel", "Cancelar", json!([])));
@@ -114,8 +123,16 @@ impl AccessController {
             "This sandbox does not support desktop browser setup yet.",
             "Este sandbox aún no admite la configuración del navegador de escritorio.",
           )
+        } else if host["error"] == "network_disabled" {
+          text("Qobuz has no network access, so its browser helper was not started. Turn off Offline mode or allow the plugin network access, then turn Qobuz off and on in Settings > Plugins.","Qobuz no tiene acceso a la red, así que su auxiliar del navegador no se inició. Desactiva el Modo offline o permite la red al plugin, y luego apaga y enciende Qobuz en Ajustes > Plugins.")
+        } else if host["error"] == "desktop_start" {
+          text("The browser helper did not start. Turn Qobuz off and on in Settings > Plugins. If it keeps happening, attach plugin-desktop/io.github.vicrodh.qbz/startup.log from Chilpa's data folder (~/.local/share/chilpa on Linux) to your report.","El auxiliar del navegador no arrancó. Apaga y enciende Qobuz en Ajustes > Plugins. Si sigue pasando, adjunta a tu reporte el archivo plugin-desktop/io.github.vicrodh.qbz/startup.log de la carpeta de datos de Chilpa (~/.local/share/chilpa en Linux).")
+        } else if setup["unreachable"] == true {
+          text("The browser helper started but does not answer. Turn Qobuz off and on in Settings > Plugins.","El auxiliar del navegador arrancó pero no responde. Apaga y enciende Qobuz en Ajustes > Plugins.")
+        } else if let Some(code) = host["error"].as_str() {
+          text(&format!("The browser helper could not start ({code}). Turn Qobuz off and on in Settings > Plugins."),&format!("El auxiliar del navegador no pudo arrancar ({code}). Apaga y enciende Qobuz en Ajustes > Plugins."))
         } else {
-          text("Desktop setup is unavailable. Use a Chilpa version with desktop companion support, enable network access, and restart Qobuz.","La configuración del navegador no está disponible. Usa una versión de Chilpa con soporte del auxiliar de escritorio, habilita la red y reinicia Qobuz.")
+          text("This Chilpa version cannot start the browser helper. Update Chilpa, then restart Qobuz.","Esta versión de Chilpa no puede iniciar el auxiliar del navegador. Actualiza Chilpa y reinicia Qobuz.")
         }
       }
     };

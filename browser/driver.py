@@ -10,6 +10,7 @@ from websockets.asyncio.client import connect
 from launch import command as launch_command, external_environment
 
 ROOT = Path(__file__).resolve().parent
+STARTUP_SECONDS = 30
 
 
 class BrowserSessionExpired(RuntimeError):
@@ -116,7 +117,9 @@ class Browser:
                 os.close(descriptor)
             if reader is not None:
                 os.close(reader)
-        for _ in range(100):
+        # A first Snap or Flatpak start on a cold disk takes well over ten seconds.
+        deadline = asyncio.get_running_loop().time() + STARTUP_SECONDS
+        while True:
             if self.process.returncode is not None:
                 raise RuntimeError(
                     "Firefox could not open the Qobuz profile; close any other window using it"
@@ -130,9 +133,9 @@ class Browser:
                 )
                 break
             except OSError:
+                if asyncio.get_running_loop().time() >= deadline:
+                    raise RuntimeError("Firefox startup timed out")
                 await asyncio.sleep(0.1)
-        else:
-            raise RuntimeError("Firefox startup timed out")
         await self.command("session.new", {"capabilities": {}})
         tree = await self.command("browsingContext.getTree", {})
         self.context = tree["contexts"][0]["context"]

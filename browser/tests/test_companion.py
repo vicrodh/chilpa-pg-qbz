@@ -85,7 +85,7 @@ class RelayTests(unittest.IsolatedAsyncioTestCase):
         self.companion.warm_browser = AsyncMock()
         response = await self.client.post("/warm", json={})
         self.assertEqual(response.status, 403)
-        self.companion.setup = SimpleNamespace(phase="waiting", cancel=AsyncMock())
+        self.companion.setup = SimpleNamespace(phase="waiting", cancel=AsyncMock(), settled=AsyncMock())
         response = await self.client.post("/warm", headers={"Authorization": "Bearer " + self.companion.key}, json={})
         self.assertFalse((await response.json())["accepted"])
         self.companion.warm_browser.assert_not_awaited()
@@ -95,7 +95,7 @@ class RelayTests(unittest.IsolatedAsyncioTestCase):
         async def warm():
             entered.set()
             await release.wait()
-        self.companion.setup = SimpleNamespace(phase="ready", cancel=AsyncMock())
+        self.companion.setup = SimpleNamespace(phase="ready", cancel=AsyncMock(), settled=AsyncMock())
         self.companion.warm_browser = AsyncMock(side_effect=warm)
         for _ in range(2):
             response = await asyncio.wait_for(self.client.post("/warm", headers={"Authorization": "Bearer " + self.companion.key}, json={}), 1)
@@ -127,7 +127,7 @@ class RelayTests(unittest.IsolatedAsyncioTestCase):
         self.assertIsNone(self.companion.idle_task)
 
     async def test_expired_browser_session_returns_an_actionable_error(self):
-        self.companion.setup = SimpleNamespace(phase="ready", cancel=AsyncMock())
+        self.companion.setup = SimpleNamespace(phase="ready", cancel=AsyncMock(), settled=AsyncMock())
         self.companion.session = {"fixture": True}
         self.companion.account = AsyncMock(side_effect=BrowserSessionExpired("fixture"))
         response = await self.client.post("/session", headers={"Authorization": "Bearer " + self.companion.key}, json={})
@@ -137,7 +137,7 @@ class RelayTests(unittest.IsolatedAsyncioTestCase):
         self.assertIsNone(self.companion.session)
 
     async def test_expired_session_releases_the_audio_preparation(self):
-        self.companion.setup = SimpleNamespace(phase="ready", cancel=AsyncMock())
+        self.companion.setup = SimpleNamespace(phase="ready", cancel=AsyncMock(), settled=AsyncMock())
         self.companion.start_browser = AsyncMock(side_effect=BrowserSessionExpired("fixture"))
         job = Job("42", 27, "fixture", self.companion.cache / "fixture.wav")
         await self.companion.prepare(job)

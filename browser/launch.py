@@ -59,6 +59,37 @@ def flatpak_available():
     )
 
 
+def snap_firefox(executable):
+    """Whether this Firefox runs confined by Snap: the snap itself, its
+    /snap/bin launcher, or a distribution wrapper script that execs it."""
+    if sys.platform != "linux" or not executable:
+        return False
+    try:
+        resolved = Path(executable).resolve()
+    except (OSError, RuntimeError):
+        return False
+    if resolved.parts[:2] == ("/", "snap") or resolved == Path("/usr/bin/snap"):
+        return True
+    try:
+        with open(resolved, "rb") as script:
+            head = script.read(4096)
+    except OSError:
+        return False
+    return head.startswith(b"#!") and b"/snap/bin/firefox" in head
+
+
+def snap_profile():
+    """Snap confinement hides dot folders in the home directory, where the
+    profile normally lives; the snap's own common folder stays readable."""
+    return Path.home() / "snap/firefox/common/chilpa-qbz-profile"
+
+
+def profile_for(mode, executable, profile):
+    if mode == "native" and snap_firefox(executable):
+        return snap_profile()
+    return profile
+
+
 def command(mode, executable, profile, port, headless):
     profile = Path(profile).resolve()
     if mode == "flatpak":

@@ -19,7 +19,8 @@ import time
 from aiohttp import web
 from driver import Browser, BrowserSessionExpired, BrowserPageOperationError
 from pcm import header as wave_header
-from launch import external_environment
+from launch import external_environment, profile_for
+from startup_trace import StartupTrace
 
 MAX_TRACK = 480 * 1024 * 1024
 MAX_CACHE = 2 * 1024 * 1024 * 1024
@@ -111,7 +112,7 @@ class Companion:
             if self.browser:
                 await self.browser.close()
             self.browser = Browser(
-                self.args.profile,
+                profile_for(self.args.mode, self.args.firefox, self.args.profile),
                 self.args.firefox,
                 headless=not visible,
                 mode=self.args.mode,
@@ -148,6 +149,9 @@ class Companion:
             return web.json_response({"error": "Invalid JSON"}, status=400)
         if not isinstance(body, dict):
             return web.json_response({"error": "Expected object"}, status=400)
+        if self.setup:
+            # The first detection runs after the handshake; nothing answers before it.
+            await self.setup.settled()
         try:
             if request.path == "/setup" and self.setup:
                 try:
@@ -657,8 +661,9 @@ class Companion:
         (self.directory / "connection.json").unlink(missing_ok=True)
 
 
-async def run(args):
+async def run(args, trace):
     companion = Companion(args)
+    trace.note("prepared")
     app = web.Application(client_max_size=65536)
     app.router.add_post("/session", companion.rpc)
     app.router.add_post("/setup", companion.rpc)
@@ -674,6 +679,7 @@ async def run(args):
     site = web.TCPSite(runner, "127.0.0.1", args.port)
     await site.start()
     companion.port = site._server.sockets[0].getsockname()[1]
+    trace.note("listening", port=companion.port)
     config = companion.directory / "connection.json"
     with open(config, "w", opener=lambda p, f: os.open(p, f, 0o600)) as out:
         json.dump({"port": companion.port, "key": companion.key}, out)
@@ -681,14 +687,16 @@ async def run(args):
         if args.managed:
             from setup import Setup
             companion.setup = Setup(companion)
-            await companion.setup.detect()
             loop = asyncio.get_running_loop()
             def input_closed():
                 if not os.read(sys.stdin.fileno(), 4096):
                     loop.remove_reader(sys.stdin.fileno())
+                    trace.note("host closed")
                     companion.stopping.set()
             loop.add_reader(sys.stdin.fileno(), input_closed)
             print(json.dumps({"protocol": 1, "port": companion.port, "key": companion.key}), flush=True)
+            trace.note("handshake")
+            companion.setup.begin(trace)
         else:
             await companion.start_browser(visible=not args.headless)
         if args.headless:
@@ -739,11 +747,13 @@ if __name__ == "__main__":
         parser.error("Install FFmpeg before starting Qobuz browser")
     if not 0 <= args.port <= 65535:
         parser.error("Invalid port")
+    trace = StartupTrace(args.data)
     try:
-        asyncio.run(run(args))
+        asyncio.run(run(args, trace))
     except KeyboardInterrupt:
         pass
-    except Exception:
+    except Exception as error:
+        trace.failure(error)
         raise SystemExit(
             "Qobuz browser could not start. Check that Firefox is installed and its Qobuz profile is not already open."
         )

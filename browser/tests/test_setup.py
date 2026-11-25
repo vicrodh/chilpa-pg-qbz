@@ -7,6 +7,7 @@ import sys
 import tempfile
 from types import SimpleNamespace
 import unittest
+import unittest.mock
 from unittest.mock import AsyncMock, patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
@@ -50,6 +51,44 @@ class SetupTests(unittest.IsolatedAsyncioTestCase):
             again = Setup(self.companion)
             self.assertEqual((await again.detect())["phase"], "ready")
             self.assertTrue(json.loads(again.file.read_text())["verified"])
+
+    async def test_first_detection_runs_after_begin_and_requests_wait_for_it(self):
+        release = asyncio.Event()
+        def slow_flatpak():
+            # Runs in a worker thread, as on a cold system.
+            asyncio.run_coroutine_threadsafe(release.wait(), loop).result(5)
+            return False
+        loop = asyncio.get_running_loop()
+        trace = SimpleNamespace(note=unittest.mock.Mock(), failure=unittest.mock.Mock())
+        with patch("setup.candidates", return_value=[str(self.executable)]), patch("setup.flatpak_available", side_effect=slow_flatpak):
+            self.setup.begin(trace)
+            waiter = asyncio.create_task(self.setup.settled())
+            await asyncio.sleep(0.05)
+            self.assertFalse(waiter.done(), "a request answered before detection finished")
+            release.set()
+            await asyncio.wait_for(waiter, 5)
+        self.assertEqual(self.setup.phase, "login")
+        trace.note.assert_called_once()
+        self.assertEqual(trace.note.call_args.args[0], "detected")
+
+    async def test_a_failed_first_detection_leaves_the_detection_step_and_is_traced(self):
+        trace = SimpleNamespace(note=unittest.mock.Mock(), failure=unittest.mock.Mock())
+        with patch("setup.candidates", side_effect=PermissionError("fixture")):
+            self.setup.begin(trace)
+            await self.setup.settled()
+        self.assertEqual(self.setup.phase, "detect")
+        self.assertTrue(self.setup.problem)
+        trace.failure.assert_called_once()
+
+    async def test_snap_firefox_is_reported_in_detection_and_the_snapshot(self):
+        wrapper = self.root / "firefox"
+        wrapper.write_text('#!/bin/sh\nexec /snap/bin/firefox "$@"\n')
+        wrapper.chmod(0o700)
+        with patch("setup.candidates", return_value=[str(wrapper), str(self.executable)]), \
+                patch("setup.flatpak_available", return_value=False), patch("launch.sys.platform", "linux"):
+            snapshot = await self.setup.detect()
+        self.assertEqual([entry["snap"] for entry in snapshot["found"]], [True, False])
+        self.assertTrue(snapshot["snap"])
 
     async def test_portal_picker_resolves_the_original_installation(self):
         with patch("launch.os.getxattr", return_value=os.fsencode(str(self.executable)), create=True):
